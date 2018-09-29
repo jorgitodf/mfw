@@ -1,0 +1,33 @@
+{
+    "name": "jorgito/mfw",
+    "description": "MicroFramework",
+    "keywords": ["microframework", "rest", "router", "psr7"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jorgito Paiva",
+            "email": "jspaiva.1977@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.6.0",
+        "pimple/pimple": "^3.2",
+        "symfony/http-foundation": "^4.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\Mfw\\": "src",
+            "App\\": "app"
+        },
+        "files" : [
+            "app/Helpers/helpers.php"
+        ]
+    },
+    "config": {
+        "process-timeout" : 0
+    },
+    "scripts": {
+        "server": "php -S localhost:8000 -t public"
+    }
+
+}
