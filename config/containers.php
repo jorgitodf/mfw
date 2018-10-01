@@ -1,6 +1,10 @@
 <?php
 
 use Pimple\Container;
+use Twig_Loader_Filesystem;
+use Twig_Environment;
+use Twig_Extension_Debug;
+use App\Helpers\Functions;
 
 $container = new Container();
 
@@ -14,7 +18,10 @@ $container['settings'] = function() {
                 'options' => [
                     \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'
                 ]
-            ] 
+            ],
+            'view' => [
+                'template_path' => __DIR__ . '/../views',
+            ],
         ];
 };
 
@@ -41,6 +48,14 @@ $container['db'] = function($c) {
         }
         die();
     }
+};
+
+$container['view'] = function($c) {
+    $loader  = new Twig_Loader_Filesystem($c['settings']['view']['template_path']);
+    $twig = new Twig_Environment($loader, array('debug' => true));
+    $twig->addExtension(new Twig_Extension_Debug);
+    $twig->addFunction(Functions::base_url());
+    return $twig;
 };
 
 return $container;

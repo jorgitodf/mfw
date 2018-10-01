@@ -7,5 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => $vendorDir . '/symfony/polyfill-mbstring/bootstrap.php',
+    '320cde22f66dd4f5d3fd621d3e88b98f' => $vendorDir . '/symfony/polyfill-ctype/bootstrap.php',
     '20265529e9f1a8922167d82df66a3edb' => $baseDir . '/app/Helpers/helpers.php',
+    '931267ca44038e4e5c29ead7e84ae9a0' => $baseDir . '/app/Helpers/functions.php',
 );

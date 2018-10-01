@@ -12,7 +12,8 @@
     "require": {
         "php": ">=5.6.0",
         "pimple/pimple": "^3.2",
-        "symfony/http-foundation": "^4.1"
+        "symfony/http-foundation": "^4.1",
+        "twig/twig": "^2.5"
     },
     "autoload": {
         "psr-4": {
@@ -20,7 +21,8 @@
             "App\\": "app"
         },
         "files" : [
-            "app/Helpers/helpers.php"
+            "app/Helpers/helpers.php",
+            "app/Helpers/functions.php"
         ]
     },
     "config": {

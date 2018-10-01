@@ -1,0 +1,75 @@
+@charset "utf-8";
+
+html, body {
+    margin: 0;
+    height: 100%;
+}
+
+/* FORMULÁRIO DE LOGIN */
+
+#formLogin {
+    height: 170px;
+}
+#div-principal-login {
+    margin-top: 9%;
+}
+#div-error-login {
+    display: none;
+}
+#span-error-login {
+    padding: 5px;
+    width: 340px;
+    position: absolute;
+}
+.msgError {
+    color: red;
+    font-weight: bold;
+    font-size: 12px;
+    text-align: center;
+}
+
+
+/* FORMULÁRIO CADASTRO NOVO USUÁRIO */
+
+#formRegister {
+    height: 170px;
+}
+#div-principal-register {
+    margin-top: 9%;
+}
+#div-error-login, #div-success-cadastro-usuario {
+    display: none;
+}
+#span-error-login {
+    padding: 5px;
+    width: 340px;
+    position: absolute;
+}
+#span-success-cadastro-user {
+    padding: 7.5px;
+    width: 220px;
+    position: absolute;
+}
+.msgError {
+    color: red;
+    font-weight: bold;
+    font-size: 12px;
+    text-align: center;
+}
+.msgSuccess {
+    color: green;
+    font-weight: bold;
+    font-size: 12px;
+    text-align: center;
+}
+.white {
+    background-color: white;
+}
+#div-success-cadastro-usuario {
+    float: left;
+    position: relative;
+}
+#div-botao-cadastro-usuario {
+    float: left;
+    position: relative;
+}

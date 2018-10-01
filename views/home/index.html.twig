@@ -1,0 +1,17 @@
+{% extends "templates/layout.html.twig" %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block content %}
+    <div class="container" id="div-principal-home">
+        <div class="row col-md-12">
+            <h2>{{ block('title') }}</h2>
+        </div>
+    </div>
+
+    <style>
+        #div-principal-home {
+            margin-top: 6%;
+        }
+    </style>
+{% endblock %}
