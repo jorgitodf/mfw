@@ -58,4 +58,8 @@ $container['view'] = function($c) {
     return $twig;
 };
 
+$container['users_model'] = function($c) {
+    return new \App\Models\Users($c);
+};
+
 return $container;
