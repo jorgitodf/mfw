@@ -10,8 +10,9 @@
 </head>
 <body>
     <!-- Fixed navbar -->
-￼    {% include 'templates/_menu.html.twig' %}
-
+    {% if isLogged() == true %}
+￼   {% include 'templates/_menu.html.twig' %}
+    {% endif %}
     <div class="container">
     {% block content %}{% endblock %}
     </div> <!-- /container -->
@@ -19,6 +20,8 @@
     {% include 'templates/_footer.html.twig' %}
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
+    <script src="https://cdn.rawgit.com/khalidsalomao/simple-query-string/22cc5bbe/src/simplequerystring.min.js"></script>
     <script src="{{ base_url() }}/assets/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="{{ base_url() }}/assets/js/scripts.js"> </script>
 </body>

@@ -1,0 +1,60 @@
+{% extends "templates/layout.html.twig" %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block content %}
+    <div class="container" id="div-principal-register">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Novo Usuário</div>
+                    <div class="panel-body">
+                        <form class="form-horizontal" role="form" method="POST" action="/create" id="formRegister">
+                            <div class="form-group">
+                                <label for="name" class="col-md-3 control-label">Nome</label>
+                                <div class="col-md-6">
+                                    <input id="name" type="text" class="form-control white remove-color-name" name="name" value="" placeholder="Informe o seu Nome Completo" autofocus>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="col-md-3 control-label">E-Mail</label>
+                                <div class="col-md-6">
+                                    <input id="email" type="email" class="form-control white remove-color-email" name="email" value="" placeholder="Informe seu E-mail" autofocus>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="col-md-3 control-label">Senha</label>
+                                <div class="col-md-6">
+                                    <input id="password" type="password" class="form-control white remove-color-password" name="password" placeholder="Informe sua Senha" >
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="re-password" class="col-md-3 control-label">Confirme a Senha</label>
+                                <div class="col-md-6">
+                                    <input id="re_password" type="password" class="form-control white remove-color-re-password" name="re_password" placeholder="Repita a sua Senha" >
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-2 col-md-offset-3" id="div-botao-cadastro-usuario">
+                                    <button type="submit" class="btn btn-primary">Cadastrar</button>
+                                </div>
+                                <div class="col-md-4" id="div-success-cadastro-usuario">
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-8 col-md-offset-3" id="div-error-login">
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+{% endblock %}
+
+

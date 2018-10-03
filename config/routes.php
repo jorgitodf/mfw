@@ -1,6 +1,10 @@
 <?php
 
-use App\Models\Users;
+$router->add('GET', '/login', '\App\Controllers\AuthController::login');
+$router->add('POST', '/auth', '\App\Controllers\AuthController::auth');
+$router->add('GET', '/logout', '\App\Controllers\AuthController::logout');
+$router->add('GET', '/new-register', '\App\Controllers\AuthController::newRegister');
+$router->add('POST', '/create', '\App\Controllers\AuthController::create');
 
 $router->add('GET', '/', '\App\Controllers\HomeController::index');
 

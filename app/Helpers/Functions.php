@@ -18,5 +18,14 @@ class Functions
 
         return $base_url;
     }
+
+    public static function isLogged()
+    {
+        $isLogged = new \Twig_SimpleFunction('isLogged', function() {
+            return $_SESSION['loggedIn'];
+        });
+
+        return $isLogged;
+    }
     
 }

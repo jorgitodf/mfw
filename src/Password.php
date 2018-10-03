@@ -4,7 +4,7 @@ namespace App\Mfw;
 
 class Password
 {
-    public static function make()
+    public static function make($password)
     {
         $options = [
             'cost' => 12

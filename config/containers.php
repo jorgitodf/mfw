@@ -55,6 +55,7 @@ $container['view'] = function($c) {
     $twig = new Twig_Environment($loader, array('debug' => true));
     $twig->addExtension(new Twig_Extension_Debug);
     $twig->addFunction(Functions::base_url());
+    $twig->addFunction(Functions::isLogged());
     return $twig;
 };
 

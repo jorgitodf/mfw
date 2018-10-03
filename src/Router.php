@@ -32,7 +32,7 @@ class Router
         throw new HttpException('Page not found', 404);
     }
 
-    private function getCurrentUrl()
+    public function getCurrentUrl()
     {
         $url = $_SERVER['PATH_INFO'] ?? '/';
 

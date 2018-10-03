@@ -9,7 +9,6 @@ class HomeController
 {
     public function index($c, $request)
     {
-        dd(Password::make('123456'));
         return $c['view']->render('home/index.html.twig', ['title' => 'Página Home']);
     }
 }
