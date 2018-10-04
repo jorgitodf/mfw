@@ -5,8 +5,9 @@ $app->middleware('before', function($c) {
 });
 
 $app->middleware('before', function($c) {
-    if (!$_SESSION && $c['router']->getCurrentUrl() == '/') {
-        redirect("/login");
+    $url = $c['router']->getCurrentUrl();
+    if (!$_SESSION && ($url == '/')) {
+        redirect("/auth/login");
     };
 });
 

@@ -3,6 +3,8 @@
 html, body {
     margin: 0;
     height: 100%;
+    padding: 0;
+    background-color: #DFE2E6;
 }
 
 /* FORMULÁRIO DE LOGIN */
@@ -72,4 +74,33 @@ html, body {
 #div-botao-cadastro-usuario {
     float: left;
     position: relative;
+}
+
+
+/* FORMULÁRIO CADASTRO BANCO */
+#div-principal-conta {
+    margin-top: 5%;
+    margin-left: 22.5%;
+    width: 77.5%;
+}
+
+#formCadBanco {
+    height: 230px;
+}
+#div-success-cadastro-banco {
+    display: none;
+}
+
+#div-success-cadastro-banco {
+    float: left;
+    position: relative;
+}
+#span-success-cadastro-banco {
+    padding: 7.5px;
+    width: 220px;
+    position: absolute;
+}
+
+.solid {
+    border: 1px solid black;
 }

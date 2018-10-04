@@ -27,6 +27,7 @@ class AuthController
     public function auth($c, $request)
     {
         $data = $request->request->all();
+        
         $user = $c[$this->getModel()]->findBy(['email' => $data['email']]);
 
         if (!$user) {
@@ -35,9 +36,8 @@ class AuthController
         }
 
         if (Password::verify($data['password'], $user['password'])) {
-            $_SESSION['idLoggedIn'] = $user['id'];
-            $_SESSION['loggedIn'] = true;
-            $_SESSION['typeUserLogged'] = 'admin';
+            Password::setSession($user['id'], true, 'admin', Password::token($user['email']));
+            $c[$this->getModel()]->update(['id' => $user['id']], ['remember_token' => $_SESSION['csrf_token']]);
             status_code(202);
             unset($user['password']);
             return json_encode(['base_url' => base_url(), 'status' => 202]);

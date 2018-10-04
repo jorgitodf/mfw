@@ -9,7 +9,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Login</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="/auth" id="formLogin">
+                    <form class="form-horizontal" role="form" method="POST" action="{{base_url()}}/auth" id="formLogin">
                         <div class="form-group">
                             <label for="email" class="col-md-3 control-label">E-Mail</label>
                             <div class="col-md-6">
@@ -27,7 +27,7 @@
                                 <button type="submit" class="btn btn-primary">Logar</button>
 
                                 <a class="btn btn-link" href="">Esqueceu sua Senha?</a>
-                                <a class="btn btn-link" href="/new-register">Cadastrar</a>
+                                <a class="btn btn-link" href="/auth/new-register">Cadastrar</a>
                             </div>
                         </div>
                         <div class="form-group">

@@ -27,5 +27,14 @@ class Functions
 
         return $isLogged;
     }
+
+    public static function csrf_token()
+    {
+        $csrf_token = new \Twig_SimpleFunction('csrf_token', function() {
+            return $_SESSION['csrf_token'];
+        });
+
+        return $csrf_token;
+    }
     
 }

@@ -37,6 +37,20 @@ $(document).ready(function () {
         });
     });
 
+    $(function(){
+        $(".remove-color-input-cbanco").click(function(){
+            $("#cod_banco").val("").css("background", "white");
+            $("#cod_banco").attr("type", "text").css("color", "black");
+        });
+    });
+
+    $(function(){
+        $(".remove-color-input-nbanco").click(function(){
+            $("#nome_banco").val("").css("background", "white");
+            $("#nome_banco").attr("type", "text").css("color", "black");
+        });
+    });
+
 
     // LOGIN USUÁRIO
     $(function () {
@@ -125,6 +139,50 @@ $(document).ready(function () {
                     }
                 })
         });
+    });
+
+
+    // CADASTRO NOVO BANCO
+    
+    $(function () {
+        $("#formCadBanco").submit(function(e) {
+            let url = $("#formCadBanco").attr("action");
+            let cod_banco = $("#cod_banco").val();
+            if (cod_banco == 'Preencha o Código do Banco!' || cod_banco == '') {
+                cod_banco = '';
+            }
+            let nome_banco = $("#nome_banco").val();
+            if (nome_banco == 'Preencha o nome do Banco!' || nome_banco == '') {
+                nome_banco = '';
+            }
+            let data = {cod_banco: cod_banco, nome_banco: nome_banco};
+            e.preventDefault();
+
+            axios.post(url, simpleQueryString.stringify(data))
+                .then(function(response) {
+                    if (response.status == 201) {
+                        $(".white").css("background", "#ffffb1");
+                        $("#div-success-cadastro-banco").html("<span class='alert alert-success msgSuccess' id='span-success-cadastro-banco'>"+ response.data['success'] +"</span>").css("display", "block");
+
+                    }
+                })
+                .catch(function(error) {
+                    if (error.response.status == 500) {
+                        if (!error.response.data.error['error-cod-banco'] == "") {
+                            $("#cod_banco").val(error.response.data.error['error-cod-banco']).css("background", cor_input).css("color", "white");
+                        } else {
+                            $("#cod_banco").css("background", "#ffffb1");
+                        }
+
+                        if (!error.response.data.error['error-nome-banco'] == "") {
+                            $("#nome_banco").val(error.response.data.error['error-nome-banco']).css("background", cor_input).css("color", "white");
+                        } else {
+                            $("#nome_banco").css("background", "#ffffb1");
+                        }
+
+                    }
+                })
+        });    
     });
 
 

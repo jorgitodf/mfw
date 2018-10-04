@@ -16,4 +16,22 @@ class Password
     {
         return password_verify($password, $hash);
     }
+
+    public static function token($email)
+    {
+        $options = [
+            'cost' => 12
+        ];
+        return password_hash($email, PASSWORD_BCRYPT, $options);
+    }
+
+    public static function setSession($idUser, $loggedIn, $typeUser, $emailByToken)
+    {
+        $_SESSION['idLoggedIn'] = $idUser;
+        $_SESSION['loggedIn'] = $loggedIn;
+        $_SESSION['typeUserLogged'] = $typeUser;
+        $_SESSION['csrf_token'] = $emailByToken;
+
+        return $_SESSION;
+    }
 }

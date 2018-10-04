@@ -56,6 +56,7 @@ $container['view'] = function($c) {
     $twig->addExtension(new Twig_Extension_Debug);
     $twig->addFunction(Functions::base_url());
     $twig->addFunction(Functions::isLogged());
+    $twig->addFunction(Functions::csrf_token());
     return $twig;
 };
 
