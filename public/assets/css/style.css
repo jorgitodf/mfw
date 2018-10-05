@@ -80,18 +80,18 @@ html, body {
 /* FORMULÁRIO CADASTRO BANCO */
 #div-principal-conta {
     margin-top: 5%;
-    margin-left: 22.5%;
+    margin-left: 19%;
     width: 77.5%;
 }
 
 #formCadBanco {
     height: 230px;
 }
-#div-success-cadastro-banco {
+#div-msg-cadastro-banco {
     display: none;
 }
 
-#div-success-cadastro-banco {
+#div-msg-cadastro-banco {
     float: left;
     position: relative;
 }

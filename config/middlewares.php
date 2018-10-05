@@ -5,10 +5,9 @@ $app->middleware('before', function($c) {
 });
 
 $app->middleware('before', function($c) {
-    $url = $c['router']->getCurrentUrl();
-    if (!$_SESSION && ($url == '/')) {
+    if (!$_SESSION && !preg_match('/^\/auth\/*./', $c['router']->getCurrentUrl())) {
         redirect("/auth/login");
-    };
+    }
 });
 
 /*

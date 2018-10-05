@@ -2,18 +2,24 @@
 
 namespace App\Validations;
 
+use App\Mfw\Password;
+
 class ValidationBanco
 {
     private $erros = [];
 
-    public function validateBanco($user_data)
+    public function validateBanco($data)
     {
-        if (empty($user_data['cod_banco'])) {
+        if (empty($data['cod_banco'])) {
             $this->erros['error-cod-banco'] = "Preencha o Código do Banco!";
         }
 
-        if (empty($user_data['nome_banco'])) {
+        if (empty($data['nome_banco'])) {
             $this->erros['error-nome-banco'] = "Preencha o nome do Banco!";
+        }
+
+        if ($data['_csrf_token'] !== Password::getTokenUser()) {
+            $this->erros['error-token-banco'] = "Operação não Autorizada!!";
         }
 
         return $this->erros;

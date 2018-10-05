@@ -34,4 +34,12 @@ class Password
 
         return $_SESSION;
     }
+
+    public static function getTokenUser()
+    {
+        if ($_SESSION['csrf_token']) {
+            return $_SESSION['csrf_token'];
+        }
+        return false;
+    } 
 }

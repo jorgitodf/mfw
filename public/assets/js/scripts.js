@@ -86,7 +86,7 @@ $(document).ready(function () {
 
     // CADASTRO NOVO USUÁRIO
     //cor fundo input
-    let cor_input = "#FF6347";
+    let cor_input = "#EBA8A3";
     $(function () {
         $("#formRegister").submit(function(e) {
             let url = $("#formRegister").attr("action");
@@ -143,7 +143,20 @@ $(document).ready(function () {
 
 
     // CADASTRO NOVO BANCO
-    
+    $('#btn-nov-bnc').click(function () {
+        $("#btn-cad-bnc").removeAttr('disabled');
+        $("#btn-nov-bnc").attr('disabled', 'disabled');
+        //$("#data_debito").removeAttr('disabled');
+        //$("#movimentacao").removeAttr('disabled');
+        //$("#nome_categoria").removeAttr('disabled');
+        //$("#valor").removeAttr('disabled');
+        $("#cod_banco").css("background", "white");
+        $("#nome_banco").css("background", "white");
+        $('#span-success-cadastro-banco').remove();
+        $("#cod_banco").val("");
+        $("#nome_banco").val("");
+    });
+
     $(function () {
         $("#formCadBanco").submit(function(e) {
             let url = $("#formCadBanco").attr("action");
@@ -155,14 +168,17 @@ $(document).ready(function () {
             if (nome_banco == 'Preencha o nome do Banco!' || nome_banco == '') {
                 nome_banco = '';
             }
-            let data = {cod_banco: cod_banco, nome_banco: nome_banco};
+            let _csrf_token = $("#_csrf_token").val();
+            let data = {cod_banco: cod_banco, nome_banco: nome_banco, _csrf_token: _csrf_token};
             e.preventDefault();
 
             axios.post(url, simpleQueryString.stringify(data))
                 .then(function(response) {
                     if (response.status == 201) {
+                        $("#btn-cad-bnc").attr('disabled', 'disabled');
+                        $("#btn-nov-bnc").removeAttr('disabled');
                         $(".white").css("background", "#ffffb1");
-                        $("#div-success-cadastro-banco").html("<span class='alert alert-success msgSuccess' id='span-success-cadastro-banco'>"+ response.data['success'] +"</span>").css("display", "block");
+                        $("#div-msg-cadastro-banco").html("<span class='alert alert-success msgSuccess' id='span-success-cadastro-banco'>"+ response.data['success'] +"</span>").css("display", "block");
 
                     }
                 })
@@ -180,6 +196,10 @@ $(document).ready(function () {
                             $("#nome_banco").css("background", "#ffffb1");
                         }
 
+                        if (!error.response.data.error['error-token-banco'] == "") {
+                            $("#div-msg-cadastro-banco").html("<span class='alert alert-danger msgError' id='span-success-cadastro-banco'>"+ error.response.data.error['error-token-banco'] +"</span>").css("display", "block");
+                        }
+
                     }
                 })
         });    
@@ -187,7 +207,7 @@ $(document).ready(function () {
 
 
     function redirectPageLogin(base_url) {
-        return window.location.replace(base_url+"/login");
+        return window.location.replace(base_url+"/auth/login");
     }
 
     function redirectPageHome(base_url) {
