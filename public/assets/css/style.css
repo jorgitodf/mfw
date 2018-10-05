@@ -7,8 +7,26 @@ html, body {
     background-color: #DFE2E6;
 }
 
-/* FORMULÁRIO DE LOGIN */
+.solid {
+    border: 1px solid black;
+}
 
+.tam-fonte {
+    font-size: 13.3px;
+}
+
+.sombra { 
+    box-shadow: 6px 6px 6px 6px black;
+    -webkit-box-shadow: 6px 6px 6px black;
+    -moz-box-shadow: 6px 6px 6px black;
+}
+
+.disabled {
+    pointer-events: none; 
+    opacity: 0.6;         
+}
+
+/* FORMULÁRIO DE LOGIN */
 #formLogin {
     height: 170px;
 }
@@ -32,7 +50,6 @@ html, body {
 
 
 /* FORMULÁRIO CADASTRO NOVO USUÁRIO */
-
 #formRegister {
     height: 170px;
 }
@@ -77,21 +94,21 @@ html, body {
 }
 
 
-/* FORMULÁRIO CADASTRO BANCO */
+/* FORMULÁRIO CADASTRO CONTA */
 #div-principal-conta {
     margin-top: 5%;
-    margin-left: 19%;
-    width: 77.5%;
+    margin-left: 16%;
+    width: 83%;
 }
 
-#formCadBanco {
-    height: 230px;
+#formCadConta {
+    height: 310px;
 }
-#div-msg-cadastro-banco {
+#div-msg-cadastro-conta {
     display: none;
 }
 
-#div-msg-cadastro-banco {
+#div-msg-cadastro-conta {
     float: left;
     position: relative;
 }
@@ -101,6 +118,11 @@ html, body {
     position: absolute;
 }
 
-.solid {
-    border: 1px solid black;
+/* PÁGINA TODOS OS BANCOS */
+#div-principal-all-bancos {
+    margin-left: 23.5%;
+    margin-top: 4%;
 }
+
+
+

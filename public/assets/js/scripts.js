@@ -146,10 +146,8 @@ $(document).ready(function () {
     $('#btn-nov-bnc').click(function () {
         $("#btn-cad-bnc").removeAttr('disabled');
         $("#btn-nov-bnc").attr('disabled', 'disabled');
-        //$("#data_debito").removeAttr('disabled');
-        //$("#movimentacao").removeAttr('disabled');
-        //$("#nome_categoria").removeAttr('disabled');
-        //$("#valor").removeAttr('disabled');
+        $("#cod_banco").removeAttr('disabled');
+        $("#nome_banco").removeAttr('disabled');
         $("#cod_banco").css("background", "white");
         $("#nome_banco").css("background", "white");
         $('#span-success-cadastro-banco').remove();
@@ -161,7 +159,7 @@ $(document).ready(function () {
         $("#formCadBanco").submit(function(e) {
             let url = $("#formCadBanco").attr("action");
             let cod_banco = $("#cod_banco").val();
-            if (cod_banco == 'Preencha o Código do Banco!' || cod_banco == '') {
+            if (cod_banco == 'Preencha o Código do Banco!' || cod_banco == 'Código do Banco já Cadastrado!' || cod_banco == '') {
                 cod_banco = '';
             }
             let nome_banco = $("#nome_banco").val();
@@ -177,9 +175,10 @@ $(document).ready(function () {
                     if (response.status == 201) {
                         $("#btn-cad-bnc").attr('disabled', 'disabled');
                         $("#btn-nov-bnc").removeAttr('disabled');
+                        $("#cod_banco").attr('disabled', 'disabled');
+                        $("#nome_banco").attr('disabled', 'disabled');
                         $(".white").css("background", "#ffffb1");
                         $("#div-msg-cadastro-banco").html("<span class='alert alert-success msgSuccess' id='span-success-cadastro-banco'>"+ response.data['success'] +"</span>").css("display", "block");
-
                     }
                 })
                 .catch(function(error) {
@@ -203,6 +202,19 @@ $(document).ready(function () {
                     }
                 })
         });    
+    });
+
+    // CADASTRO NOVA CONTA
+    $('#btn-nov-conta').click(function () {
+        $("#btn-cad-conta").removeAttr('disabled');
+        $("#btn-nov-conta").attr('disabled', 'disabled');
+        $("#cod_banco").removeAttr('disabled');
+        $("#nome_banco").removeAttr('disabled');
+        $("#cod_banco").css("background", "white");
+        $("#nome_banco").css("background", "white");
+        $('#span-success-cadastro-banco').remove();
+        $("#cod_banco").val("");
+        $("#nome_banco").val("");
     });
 
 

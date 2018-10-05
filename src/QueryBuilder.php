@@ -13,6 +13,12 @@ class QueryBuilder
         return $this;
     }
 
+    public function selectOrderBy(string $table, string $value)
+    {
+        $this->sql = "SELECT * FROM `{$table}` ORDER BY `{$value}` ASC";
+        return $this;
+    }
+
     public function insert(string $table, array $data)
     {
         $sql = "INSERT INTO `{$table}` (%s) VALUES (%s)";

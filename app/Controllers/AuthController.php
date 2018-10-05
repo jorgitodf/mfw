@@ -36,7 +36,7 @@ class AuthController
         }
 
         if (Password::verify($data['password'], $user['password'])) {
-            Password::setSession($user['id'], true, 'admin', Password::token($user['email']));
+            Password::setSession($user['id'], true, 'admin', Password::token($user['email']), $user['name']);
             $c[$this->getModel()]->update(['id' => $user['id']], ['remember_token' => $_SESSION['csrf_token']]);
             status_code(202);
             unset($user['password']);

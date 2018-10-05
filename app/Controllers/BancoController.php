@@ -23,14 +23,22 @@ class BancoController
         return $c['view']->render('banco/index.html.twig', ['title' => 'Novo Banco']);
     }
 
+    public function all($c, $request)
+    {
+
+        return $c['view']->render('banco/all.html', ['title' => 'Bancos']);
+    }
+
     public function create($c, $request)
     {
         $data = $request->request->all();
-        $error = $this->validations->validateBanco($data);
-
+        $error = $this->validations->validateBanco($data, $c);
+        
         if (!$error) {
+            $datas = $this->validations->formateDataBanco($data);
+            $c[$this->getModel()]->create($datas);
             status_code(201);
-            return json_encode(['base_url' => base_url(), 'success' => 'Banco Cadastrado com Sucesso!', 'status' => 201]);
+            return json_encode(['success' => 'Banco Cadastrado com Sucesso!', 'status' => 201]);
         }
 
         status_code(500);

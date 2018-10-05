@@ -14,7 +14,6 @@ abstract class Model
     public function __construct(Container $cont)
     {
         $this->db = $cont['db'];
-        $this->table = "users";
         $this->queryBuilder = new QueryBuilder;
 
         if (!$this->table) {
@@ -40,6 +39,14 @@ abstract class Model
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
+    public function allOrderBy($value)
+    {
+        $query = $this->queryBuilder->selectOrderBy($this->table, $value)->getData();
+        $stmt = $this->db->prepare($query->sql);
+        $stmt->execute($query->bind);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
     public function getById(array $conditions)
     {
         $query = $this->queryBuilder->select($this->table)->where($conditions)->getData();
@@ -54,7 +61,6 @@ abstract class Model
         $query = $this->queryBuilder->select($this->table)->where($conditions)->getData();
         $stmt = $this->db->prepare($query->sql);
         $stmt->execute($query->bind);
-
         return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
 

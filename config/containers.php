@@ -64,4 +64,17 @@ $container['users_model'] = function($c) {
     return new \App\Models\Users($c);
 };
 
+$container['banks_model'] = function($c) {
+    return new \App\Models\Banks($c);
+};
+
+$container['accounts_model'] = function($c) {
+    return new \App\Models\Accounts($c);
+};
+
+$container['account_type_model'] = function($c) {
+    return new \App\Models\AccountType($c);
+};
+
+
 return $container;

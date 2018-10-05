@@ -18,4 +18,5 @@ $router->add('GET', '/conta', '\App\Controllers\ContaController::index');
 $router->add('POST', '/conta/create', '\App\Controllers\ContaController::create');
 
 $router->add('GET', '/banco', '\App\Controllers\BancoController::index');
+$router->add('GET', '/bancos', '\App\Controllers\BancoController::all');
 $router->add('POST', '/banco/create', '\App\Controllers\BancoController::create');

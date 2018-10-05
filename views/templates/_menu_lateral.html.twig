@@ -6,23 +6,24 @@
 
         <ul id="menu-content" class="menu-content collapse out">
 
-            <li  data-toggle="collapse" data-target="#bancos" class="collapsed active">
-                <a href="#"><i class="fa fa-bank fa-lg"></i> Bancos <span class="arrow"></span></a>
+            <li  data-toggle="collapse" data-target="#bancos" class="collapsed active disabled">
+                <a><i class="fa fa-bank fa-lg"></i> Bancos <span class="arrow"></span></a>
             </li>
             <ul class="sub-menu collapse" id="bancos">
                 <li class="active"><a href="{{base_url()}}/banco">Novo Banco</a></li>
                 <li><a href="#">Alterar Banco</a></li>
+                <li><a href="{{base_url()}}/bancos">Todos Bancos</a></li>
             </ul>
 
             <li  data-toggle="collapse" data-target="#contas" class="collapsed">
-                <a href="#"><i class="fa fa-money fa-lg"></i> Contas <span class="arrow"></span></a>
+                <a><i class="fa fa-money fa-lg"></i> Contas <span class="arrow"></span></a>
             </li>
             <ul class="sub-menu collapse" id="contas">
                 <li class="active"><a href="{{base_url()}}/conta">Nova Conta</a></li>
                 <li><a href="#">Alterar Conta</a></li>
             </ul>
 
-            <li  data-toggle="collapse" data-target="#products" class="collapsed">
+            <li  data-toggle="collapse" data-target="#products" class="collapsed disabled">
                 <a href="#"><i class="fa fa-newspaper-o fa-lg"></i> Extratos <span class="arrow"></span></a>
             </li>
             <ul class="sub-menu collapse" id="products">
@@ -30,7 +31,7 @@
                 <li><a href="#">Por Período</a></li>
             </ul>
 
-            <li data-toggle="collapse" data-target="#service" class="collapsed">
+            <li data-toggle="collapse" data-target="#service" class="collapsed disabled">
                 <a href="#"><i class="fa fa-globe fa-lg"></i> Transações <span class="arrow"></span></a>
             </li>  
             <ul class="sub-menu collapse" id="service">
@@ -38,7 +39,7 @@
                 <li>Debigtar</li>
             </ul>
 
-            <li data-toggle="collapse" data-target="#new" class="collapsed">
+            <li data-toggle="collapse" data-target="#new" class="collapsed disabled">
                 <a href="#"><i class="fa fa-credit-card fa-lg"></i> Cartão de Crédito <span class="arrow"></span></a>
             </li>
             <ul class="sub-menu collapse" id="new">
@@ -50,7 +51,7 @@
                 <li>Consultar Fatura</li>
             </ul>
 
-            <li data-toggle="collapse" data-target="#agendamentos" class="collapsed">
+            <li data-toggle="collapse" data-target="#agendamentos" class="collapsed disabled">
                 <a href="#"><i class="fa fa-calendar fa-lg"></i> Agendamentos <span class="arrow"></span></a>
             </li>
             <ul class="sub-menu collapse" id="agendamentos">
@@ -58,7 +59,7 @@
                 <li>Listagem Pagamentos</li>
             </ul>
 
-            <li>
+            <li class="disabled">
                 <a href="#">
                 <i class="fa fa-dashboard fa-lg"></i> Relatórios
                 </a>

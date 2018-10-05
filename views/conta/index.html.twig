@@ -5,37 +5,63 @@
 {% block content %}
 <div class="container col-md-9" id="div-principal-conta">
     <div class="row ">
-        <div class="col-md-7 col-md-offset-3">
-            <div class="well well-sm">
-            <form class="form-horizontal" role="form" action="{{ base_url() }}/conta/create" method="post" id="formCadBanco">
+        <div class="col-md-11 col-md-offset-1">
+            <div class="well well-sm sombra">
+            <form class="form-horizontal" role="form" action="{{ base_url() }}/conta/create" method="post" id="formCadConta">
             <fieldset>
-                <legend class="text-center">Cadastro de Banco</legend>
-        
+                <legend class="text-center">Cadastro de Conta</legend>
+     
                 <div class="form-group">
-                <label class="col-md-4 control-label" for="cod_banco">Código do Banco</label>
-                <div class="col-md-8">
-                    <input id="cod_banco" name="cod_banco" type="text" placeholder="Código do Banco" class="form-control">
-                </div>
-                </div>
-        
-                <div class="form-group">
-                <label class="col-md-4 control-label" for="nome_banco">Nome do Banco</label>
-                <div class="col-md-8">
-                    <input id="nome_banco" name="nome_banco" type="text" placeholder="Nome do Banco" class="form-control">
-                </div>
-                </div>
-        
-                <!-- Form actions -->
-                <div class="form-group">
-                    <div class="col-md-8 col-md-offset-4 text-left">
-                        <button type="submit" class="btn btn-primary btn-md">Cadastrar</button>
+                    <label class="col-sm-2 control-label tam-fonte" for="codigo_agencia">Código da Agência:</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="codigo_agencia" name="codigo_agencia" placeholder="Código da Agência" class="form-control" autofocus="autofocus">
+                    </div>
+
+                    <label class="col-sm-2 control-label tam-fonte" for="digito_verificador_agencia">Dígito Agência:</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="digito_verificador_agencia" name="digito_verificador_agencia" placeholder="Dígito verificador da Agência" class="form-control">
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <div class="col-md-6 col-md-offset-4" id="div-success-cadastro-banco">
-                        <span class='alert alert-success msgSuccess' id='span-success-cadastro-banco'>Banco Cadastrado com Sucesso</span>
+                    <label class="col-sm-2 control-label tam-fonte" for="numero_conta">Número da Conta:</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="numero_conta" name="numero_conta" placeholder="Número da Conta" class="form-control">
                     </div>
+
+                    <label class="col-sm-2 control-label tam-fonte" for="digito_verificador_conta">Dígito da Conta:</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="digito_verificador_conta" name="digito_verificador_conta" placeholder="Dígito verificador da Conta" class="form-control">
+                    </div>
+                </div>
+        
+                <div class="form-group">
+                    <label class="col-sm-2 control-label tam-fonte" for="codigo_operacao">Código da Operação:</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="codigo_operacao" name="codigo_operacao" placeholder="Código da Operação" class="form-control">
+                    </div>
+
+                    <label class="col-sm-2 control-label tam-fonte" for="tipo_conta">Tipo de Conta:</label>
+                    <div class="col-sm-4">
+                        <select class="form-control" name="tipo_conta" id="tipo_conta"/>
+                            <option></option>
+                                {% for tipo in tipo_conta %}
+                                <option value="{{ tipo.id }}">{{ tipo.tipo_conta }}</option>
+                                {% endfor %}
+                        </select>
+                    </div>
+                </div
+        
+                <!-- Form actions -->
+                <div class="form-group">
+                    <div class="col-md-8 col-md-offset-2 text-left">
+                        <button type="button" class="btn btn-primary btn-md" id="btn-nov-conta">Novo</button>
+                        <button type="submit" class="btn btn-primary btn-md" id="btn-cad-conta" disabled>Cadastrar</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-8 col-md-offset-2" id="div-msg-cadastro-conta"></div>
                 </div>
 
             </fieldset>
