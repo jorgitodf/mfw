@@ -100,15 +100,45 @@ html, body {
     margin-left: 16%;
     width: 83%;
 }
-
 #formCadConta {
     height: 310px;
 }
 #div-msg-cadastro-conta {
     display: none;
 }
-
 #div-msg-cadastro-conta {
+    float: left;
+    position: relative;
+}
+#span-success-cadastro-conta {
+    padding: 7.5px;
+    width: 220px;
+    position: absolute;
+}
+
+
+/* PÁGINA TODOS OS BANCOS */
+#div-principal-all-bancos {
+    margin-left: 23.5%;
+    margin-top: 4%;
+}
+
+
+/* FORMULÁRIO CADASTRO BANCO */
+#div-principal-banco {
+    margin-top: 5%;
+    margin-left: 16%;
+    width: 83%;
+}
+
+#formCadBanco {
+    height: 310px;
+}
+#div-msg-cadastro-banco {
+    display: none;
+}
+
+#div-msg-cadastro-banco {
     float: left;
     position: relative;
 }
@@ -117,12 +147,5 @@ html, body {
     width: 220px;
     position: absolute;
 }
-
-/* PÁGINA TODOS OS BANCOS */
-#div-principal-all-bancos {
-    margin-left: 23.5%;
-    margin-top: 4%;
-}
-
 
 

@@ -208,13 +208,94 @@ $(document).ready(function () {
     $('#btn-nov-conta').click(function () {
         $("#btn-cad-conta").removeAttr('disabled');
         $("#btn-nov-conta").attr('disabled', 'disabled');
-        $("#cod_banco").removeAttr('disabled');
-        $("#nome_banco").removeAttr('disabled');
-        $("#cod_banco").css("background", "white");
-        $("#nome_banco").css("background", "white");
-        $('#span-success-cadastro-banco').remove();
-        $("#cod_banco").val("");
-        $("#nome_banco").val("");
+        $("#codigo_agencia").removeAttr('disabled');
+        $("#digito_verificador_agencia").removeAttr('disabled');
+        $("#numero_conta").removeAttr('disabled');
+        $("#digito_verificador_conta").removeAttr('disabled');
+        $("#codigo_operacao").removeAttr('disabled');
+        $("#tipo_conta").removeAttr('disabled');
+        $("#banco").removeAttr('disabled');
+        $(".input-white").css("background", "white").val("");
+        $('#span-success-cadastro-conta').remove();
+    });
+    $(function () {
+        $("#formCadConta").submit(function(e) {
+            let url = $("#formCadConta").attr("action");
+            let codigo_agencia = $("#codigo_agencia").val();
+            if (codigo_agencia == 'Preencha o Código da Agência!' || codigo_agencia == 'Código da Agência somente Números!' || codigo_agencia == 'Código da Agência deve conter até 4 dígitos!' || codigo_agencia == '') {
+                codigo_agencia = '';
+            }
+
+            let digito_verificador_agencia = $("#digito_verificador_agencia").val();
+            if (digito_verificador_agencia == 'Dígito Verificador da Agência somente Números!' || digito_verificador_agencia == 'Dígito Verificador da Agência deve conter 1 dígito!' || digito_verificador_agencia == '') {
+                digito_verificador_agencia = '';
+            }
+
+            let numero_conta = $("#numero_conta").val();
+            if (numero_conta == 'Preencha o Número da Conta!' || numero_conta == 'Número da Conta somente Números!' || numero_conta == 'Número da Conta deve conter até 9 dígitos!', numero_conta == '') {
+                numero_conta = '';
+            }
+
+            let digito_verificador_conta = $("#digito_verificador_conta").val();
+            if (digito_verificador_conta == 'Preencha o Dígito Verificador da Conta!' || digito_verificador_conta == 'Dígito Verificador da Conta somente Números!' || digito_verificador_conta == 'Dígito Verificador da Conta deve conter 1 dígito!', digito_verificador_conta == '') {
+                digito_verificador_conta = '';
+            }
+
+            let codigo_operacao = $("#codigo_operacao").val();
+            if (codigo_operacao == 'Código da Operação somente Números!' || codigo_operacao == 'Código da Operação deve conter até 3 dígitos!' || codigo_operacao == '') {
+                codigo_operacao = '';
+            }
+
+            let tipo_conta = $("#tipo_conta").val();
+            if (tipo_conta == 'Preencha o Tipo da Conta!' || tipo_conta == '') {
+                tipo_conta = '';
+            }
+
+            let banco = $("#banco").val();
+
+            let _csrf_token = $("#_csrf_token").val();
+            let data = {codigo_agencia: codigo_agencia, digito_verificador_agencia: digito_verificador_agencia, 
+                numero_conta: numero_conta, digito_verificador_conta: digito_verificador_conta, 
+                codigo_operacao: codigo_operacao, tipo_conta: tipo_conta, banco: banco, _csrf_token: _csrf_token};
+            e.preventDefault();
+
+            axios.post(url, simpleQueryString.stringify(data))
+                .then(function(response) {
+                    if (response.status == 201) {
+                        $("#btn-cad-conta").attr('disabled', 'disabled');
+                        $("#btn-nov-conta").removeAttr('disabled');
+                        $("#codigo_agencia").attr('disabled', 'disabled');
+                        $("#digito_verificador_agencia").attr('disabled', 'disabled');
+                        $("#numero_conta").attr('disabled', 'disabled');
+                        $("#digito_verificador_conta").attr('disabled', 'disabled');
+                        $("#codigo_operacao").attr('disabled', 'disabled');
+                        $("#tipo_conta").attr('disabled', 'disabled');
+                        $("#banco").attr('disabled', 'disabled');
+                        $(".white").css("background", "#ffffb1");
+                        $("#div-msg-cadastro-conta").html("<span class='alert alert-success msgSuccess' id='span-success-cadastro-conta'>"+ response.data['success'] +"</span>").css("display", "block");
+                    }
+                })
+                .catch(function(error) {
+                    if (error.response.status == 500) {
+                        if (!error.response.data.error['error-cod-agencia'] == "") {
+                            $("#codigo_agencia").val(error.response.data.error['error-cod-agencia']).css("background", cor_input).css("color", "white");
+                        } else {
+                            $("#codigo_agencia").css("background", "#ffffb1");
+                        }
+
+                        if (!error.response.data.error['error-dig-ver-agencia'] == "") {
+                            $("#digito_verificador_agencia").val(error.response.data.error['error-dig-ver-agencia']).css("background", cor_input).css("color", "white");
+                        } else {
+                            $("#digito_verificador_agencia").css("background", "#ffffb1");
+                        }
+
+                        if (!error.response.data.error['error-token-banco'] == "" || !error.response.data.error['error-conta'] == "") {
+                            $("#div-msg-cadastro-conta").html("<span class='alert alert-danger msgError' id='span-success-cadastro-conta'>"+ error.response.data.error['error-token-banco'] +"</span>").css("display", "block");
+                        }
+
+                    }
+                })
+        });    
     });
 
 
