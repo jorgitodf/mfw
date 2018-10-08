@@ -32,6 +32,14 @@ class Password
         $_SESSION['typeUserLogged'] = $typeUser;
         $_SESSION['csrf_token'] = $emailByToken;
         $_SESSION['name'] = $name;
+        $_SESSION['hasConta'] = "";
+
+        return $_SESSION;
+    }
+
+    public static function setHasConta($idConta)
+    {
+        $_SESSION['hasConta'] = $idConta;
 
         return $_SESSION;
     }
@@ -40,6 +48,14 @@ class Password
     {
         if ($_SESSION['csrf_token']) {
             return $_SESSION['csrf_token'];
+        }
+        return false;
+    } 
+
+    public static function hasConta()
+    {
+        if ($_SESSION['hasConta']) {
+            return $_SESSION['hasConta'];
         }
         return false;
     } 

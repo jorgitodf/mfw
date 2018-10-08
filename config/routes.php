@@ -14,8 +14,11 @@ $router->add('POST', '/users', '\App\Controllers\UsersController::create');
 $router->add('PUT', '/users/(\d+)', '\App\Controllers\UsersController::update');
 $router->add('DELETE', '/users/(\d+)', '\App\Controllers\UsersController::delete');
 
-$router->add('GET', '/conta', '\App\Controllers\ContaController::index');
+$router->add('GET', '/conta/new', '\App\Controllers\ContaController::index');
 $router->add('POST', '/conta/create', '\App\Controllers\ContaController::create');
+$router->add('GET', '/conta/list', '\App\Controllers\ContaController::list');
+$router->add('GET', '/conta/clean-session-conta', '\App\Controllers\ContaController::cleanSessionConta');
+$router->add('GET', '/conta', '\App\Controllers\ContaController::cleanContaSession');
 
 $router->add('GET', '/banco', '\App\Controllers\BancoController::index');
 $router->add('GET', '/bancos', '\App\Controllers\BancoController::all');

@@ -14,13 +14,13 @@ class HomeController
     public function index($c, $request)
     {
         $user = Password::getSessionUser();
-        $id = (int) $user['idLoggedIn'];
 
-        if (!$c[$this->getModel()]->getById(['fk_users' => $id])) {
+        $contas = $c[$this->getModel()]->getAllById(['fk_users' => $user['idLoggedIn']]);
+        if (!$contas) {
             $msg = "Prezado(a) {$user['name']}, você não possui nenhuma Conta Ativa ou Cadastrada.";
             $msg .= " Para acesso às funcionalidades do Sistema, favor cadastre uma Conta!";
         }
-        
-        return $c['view']->render('home/index.html.twig', ['title' => 'Página Home', 'data' => $msg]);
+
+        return $c['view']->render('home/index.html.twig', ['title' => 'Página Home', 'data' => $msg, 'contas' => $contas]);
     }
 }

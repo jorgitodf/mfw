@@ -56,6 +56,15 @@ abstract class Model
         return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
 
+    public function getAllById(array $conditions)
+    {
+        $query = $this->queryBuilder->select($this->table)->where($conditions)->getData();
+        $stmt = $this->db->prepare($query->sql);
+        $stmt->execute($query->bind);
+
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
     public function findBy(array $conditions)
     {
         $query = $this->queryBuilder->select($this->table)->where($conditions)->getData();
@@ -67,7 +76,6 @@ abstract class Model
     public function create(array $data) 
     {
         $query = $this->queryBuilder->insert($this->table, $data)->getData();
-
         $stmt = $this->db->prepare($query->sql);
         $stmt->execute($query->bind);
         $result = $this->getById(['id' => $this->db->lastInsertId()]);

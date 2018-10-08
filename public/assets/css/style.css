@@ -21,6 +21,10 @@ html, body {
     -moz-box-shadow: 6px 6px 6px black;
 }
 
+select option:checked {
+    color: black;
+}
+
 .disabled {
     pointer-events: none; 
     opacity: 0.6;         
@@ -149,3 +153,32 @@ html, body {
 }
 
 
+#table_contas th {
+    text-align: center;
+    background-color: #CDCDC1;
+}
+#table_contas th {
+    border: 1px solid white !important;
+}
+#table_contas th:nth-child(1) {
+    width: 10% !important;
+}
+#table_contas th:nth-child(2) {
+    width: 12% !important;
+}
+#table_contas th:nth-child(3) {
+    width: 12% !important;
+}
+#table_contas th:nth-child(4) {
+    width: 18% !important;
+}
+#table_contas th:nth-child(5) {
+    width: 18% !important;
+}
+#table_contas th:nth-child(6) {
+    width: 30% !important;
+}
+
+#table_contas tbody tr {
+    text-align: center;
+}

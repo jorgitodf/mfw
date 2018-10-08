@@ -36,5 +36,14 @@ class Functions
 
         return $csrf_token;
     }
+
+    public static function hasConta()
+    {
+        $hasConta = new \Twig_SimpleFunction('hasConta', function() {
+            return $_SESSION['hasConta'];
+        });
+
+        return $hasConta;
+    }
     
 }
