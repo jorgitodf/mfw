@@ -58,6 +58,7 @@ $container['view'] = function($c) {
     $twig->addFunction(Functions::isLogged());
     $twig->addFunction(Functions::csrf_token());
     $twig->addFunction(Functions::hasConta());
+    $twig->addFunction(Functions::mes());
     return $twig;
 };
 

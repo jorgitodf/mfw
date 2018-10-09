@@ -74,6 +74,21 @@ class QueryBuilder
         return $this;
     }
 
+    public function between(string $field, string $date1, string $date2)
+    {
+
+        if (!$this->sql) {
+            throw new \Exception("Select(), Update() or Delete() is required before between() method");
+        }
+
+        foreach ($columns as &$column) {
+            $column = $column . '=?';
+        }
+
+        $this->sql .= " AND " . $field . " BETWEEN '". $date1 ."' AND '". $date2 ."' ORDER BY {$field}";
+        return $this;
+    }
+
     public function getData() :\stdClass
     {
         $query = new \stdClass;

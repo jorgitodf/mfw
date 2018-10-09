@@ -65,6 +65,16 @@ abstract class Model
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
+    public function between(array $conditions_1, string $field, string $date1, string $date2)
+    {
+        $query = $this->queryBuilder->select($this->table)->where($conditions_1)->between($field, $date1, $date2)->getData();
+
+        $stmt = $this->db->prepare($query->sql);
+        $stmt->execute($query->bind);
+
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
     public function findBy(array $conditions)
     {
         $query = $this->queryBuilder->select($this->table)->where($conditions)->getData();

@@ -185,23 +185,71 @@ select option:checked {
 
 
 /* FOMMULÁRIO AGENDAMENTO DE PAGAMENTOS */
-#div-principal-categoria {
+#div-principal-agd-pgto {
     margin-top: 5%;
-    margin-left: 15.5%;
+    margin-left: 15.8%;
     width: 83%;
 }
-#formCadCategoria {
+#formCadAgendamentoPagamento {
     height: 240px;
 }
-#div-msg-cadastro-categoria {
+#div-msg-cadastro-agd-pgto {
     display: none;
 }
-#div-msg-cadastro-categoria {
+#div-msg-cadastro-agd-pgto {
     float: left;
     position: relative;
 }
-#span-success-cadastro-categoria {
+#span-success-cadastro-agd-pgto {
     padding: 7.5px;
-    width: 220px;
+    width: 260px;
     position: absolute;
+}
+
+#table_pgto_agendado th {
+    text-align: center;
+    background-color: #CDCDC1;
+}
+#table_pgto_agendado th {
+    border: 1px solid white !important;
+}
+#table_pgto_agendado th:nth-child(1) {
+    width: 25% !important;
+}
+#table_pgto_agendado th:nth-child(2) {
+    width: 10% !important;
+}
+#table_pgto_agendado th:nth-child(3) {
+    width: 10% !important;
+}
+#table_pgto_agendado th:nth-child(4) {
+    width: 10% !important;
+}
+#table_pgto_agendado tbody tr {
+    text-align: center;
+}
+
+#cab_table {
+    border: 1px solid white !important;
+    text-align: center;
+    background-color: #CDCDC1;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.td_color_pgto {
+    color: red;
+
+}
+.td_color_pgto_sim {
+    color: blue;
+}
+.cor_preta {
+    font-weight: bold;
+    color: black;
+    font-size: 14px !important;
+}
+#table_pgto_agendado tfoot {
+    background-color: #E9B65C;
+    font-weight: bold;
 }

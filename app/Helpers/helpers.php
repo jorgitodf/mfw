@@ -64,3 +64,58 @@ function login()
     return $login;
 }
 
+function formatarMoeda($valor) 
+{
+    $valor1 = trim(str_replace('R$ ', '', $valor));
+    $number = str_replace(',','.',preg_replace('#[^\d\,]#is','',$valor1)); 
+    return number_format((float) $number, 2, "." ,"");
+}
+
+function ano()
+{
+    return date("Y");
+}
+
+function verificaMesNumerico() {
+    $mesAtual = date("m");
+    switch ($mesAtual) {
+        case '01':
+            $mesAtual = '01';
+            break;
+        case '02':
+            $mesAtual = '02';
+            break;
+        case '03':
+            $mesAtual = '03';
+            break;
+        case '04':
+            $mesAtual = '04';
+            break;
+        case '05':
+            $mesAtual = '05';
+            break;
+        case '06':
+            $mesAtual = '06';
+            break;
+        case '07':
+            $mesAtual = '07';
+            break;
+        case '08':
+            $mesAtual = '08';
+            break;
+        case '09':
+            $mesAtual = '09';
+            break;
+        case '10':
+            $mesAtual = '10';
+            break;
+        case '11':
+            $mesAtual = '11';
+            break;
+        case '12':
+            $mesAtual = '12';
+            break;
+    }
+    return $mesAtual;
+}
+

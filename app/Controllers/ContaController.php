@@ -81,7 +81,8 @@ class ContaController
     public function create($c, $request)
     {
         $data = $request->request->all();
-        $error = $this->validations->validateConta($data, $c, $_SESSION['idLoggedIn']);
+        $id = (int) $_SESSION['idLoggedIn'];
+        $error = $this->validations->validateConta($data, $c, $id);
 
         if (!$error) {
             $datas = $this->validations->formateDataConta($data, $id);

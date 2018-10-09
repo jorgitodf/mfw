@@ -3,21 +3,21 @@
 {% block title %}{{title}}{% endblock %}
 
 {% block content %}
-<div class="container col-md-9" id="div-principal-categoria">
+<div class="container col-md-9" id="div-principal-agd-pgto">
     <div class="row">
         <div class="col-md-11 col-md-offset-1">
             <div class="well well-sm sombra">
-            <form class="form-horizontal" role="form" action="{{ base_url() }}/conta/create" method="post" id="formCadCategoria">
+            <form class="form-horizontal" role="form" action="{{ base_url() }}/pagamento/create" method="post" id="formCadAgendamentoPagamento">
             <fieldset>
                 <legend class="text-center">Agendamento de Pagamento</legend>
 
                 <div class="form-group">
                     <label class="col-sm-2 control-label tam-fonte" for="data_pagamento">Data do Pagamento:</label>
                     <div class="col-sm-3">
-                        <input type="date" id="data_pagamento" name="data_pagamento" class="form-control remove-color-input white" autofocus="autofocus" disabled="disabled">
+                        <input type="date" id="data_pagamento" name="data_pagamento" class="form-control remove-color-input-date white" disabled="disabled">
                     </div>
 
-                    <label class="col-sm-2 control-label tam-fonte" for="movimentacao">Dígito Agência:</label>
+                    <label class="col-sm-2 control-label tam-fonte" for="movimentacao">Movimentação:</label>
                     <div class="col-sm-4">
                         <input type="text" id="movimentacao" name="movimentacao" placeholder="Descrição da Movimentação" class="form-control remove-color-input white" disabled="disabled">
                         <input type="hidden" name="_csrf_token" id="_csrf_token" value="{{ csrf_token() }}" />   
@@ -33,7 +33,7 @@
 
                     <label class="col-sm-2 control-label tam-fonte" for="categoria">Categoria:</label>
                     <div class="col-sm-4">
-                        <select class="form-control" name="categoria" id="categoria" disabled="disabled"/>
+                        <select class="form-control remove-color-option white" name="categoria" id="categoria" disabled="disabled"/>
                             <option></option>
                                 {% for categoria in categorias %}
                                 <option value="{{ categoria.id }}">{{ categoria.nome_categoria }}</option>
@@ -45,11 +45,11 @@
                 <!-- Form actions -->
                 <div class="form-group">
                     <div class="col-md-4 col-md-offset-2 text-left">
-                        <button type="button" class="btn btn-primary btn-md" id="btn-nov-categoria">Novo</button>
-                        <button type="submit" class="btn btn-primary btn-md" id="btn-cad-categoria" disabled>Agendar</button>
+                        <button type="button" class="btn btn-primary btn-md" id="btn-nov-agd-pgto">Novo</button>
+                        <button type="submit" class="btn btn-primary btn-md" id="btn-cad-agd-pgto" disabled>Agendar</button>
                     </div>
-                    <div class="col-md-4 col-md-offset-1 text-left" id="div-msg-cadastro-categoria">
-                        <span class='alert alert-success msgSuccess' id='span-success-cadastro-categoria'>Sucesso </span>
+                    <div class="col-md-5 col-md-offset-1 text-left" id="div-msg-cadastro-agd-pgto">
+                        <span class='alert alert-success msgSuccess' id='span-success-cadastro-agd-pgto'>Pagamento Agendado com Sucesso!</span>
                     </div>
                 </div>
 
