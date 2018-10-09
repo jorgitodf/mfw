@@ -12,14 +12,14 @@
                 <legend class="text-center">Cadastro de Banco</legend>
         
                 <div class="form-group">
-                    <label class="col-md-4 control-label" for="cod_banco">Código do Banco</label>
+                    <label class="col-md-3 control-label" for="cod_banco">Código do Banco</label>
                     <div class="col-md-8">
                         <input id="cod_banco" name="cod_banco" type="text" placeholder="Código do Banco" class="form-control white remove-color-input-cbanco" disabled="disabled">
                     </div>
                 </div>
         
                 <div class="form-group">
-                    <label class="col-md-4 control-label" for="nome_banco">Nome do Banco</label>
+                    <label class="col-md-3 control-label" for="nome_banco">Nome do Banco</label>
                     <div class="col-md-8">
                         <input id="nome_banco" name="nome_banco" type="text" placeholder="Nome do Banco" class="form-control white remove-color-input-nbanco" disabled="disabled">
                         <input type="hidden" name="_csrf_token" id="_csrf_token" value="{{ csrf_token() }}" />   
@@ -29,7 +29,7 @@
         
                 <!-- Form actions -->
                 <div class="form-group">
-                    <div class="col-md-8 col-md-offset-4 text-left">
+                    <div class="col-md-9 col-md-offset-3 text-left">
                         <button type="button" class="btn btn-primary btn-md" id="btn-nov-bnc">Novo</button>
                         <button type="submit" class="btn btn-primary btn-md" id="btn-cad-bnc" disabled>Cadastrar</button>
                     </div>

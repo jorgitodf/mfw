@@ -23,3 +23,8 @@ $router->add('GET', '/conta', '\App\Controllers\ContaController::cleanContaSessi
 $router->add('GET', '/banco', '\App\Controllers\BancoController::index');
 $router->add('GET', '/bancos', '\App\Controllers\BancoController::all');
 $router->add('POST', '/banco/create', '\App\Controllers\BancoController::create');
+
+
+$router->add('GET', '/pagamento', '\App\Controllers\ScheduledPaymentController::index');
+//$router->add('GET', '/pagamento', '\App\Controllers\ScheduledPaymentController::all');
+$router->add('POST', '/pagamento/create', '\App\Controllers\ScheduledPaymentController::create');

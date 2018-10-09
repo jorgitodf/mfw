@@ -1,0 +1,63 @@
+{% extends "templates/layout.html.twig" %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block content %}
+<div class="container col-md-9" id="div-principal-categoria">
+    <div class="row">
+        <div class="col-md-11 col-md-offset-1">
+            <div class="well well-sm sombra">
+            <form class="form-horizontal" role="form" action="{{ base_url() }}/conta/create" method="post" id="formCadCategoria">
+            <fieldset>
+                <legend class="text-center">Agendamento de Pagamento</legend>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label tam-fonte" for="data_pagamento">Data do Pagamento:</label>
+                    <div class="col-sm-3">
+                        <input type="date" id="data_pagamento" name="data_pagamento" class="form-control remove-color-input white" autofocus="autofocus" disabled="disabled">
+                    </div>
+
+                    <label class="col-sm-2 control-label tam-fonte" for="movimentacao">Dígito Agência:</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="movimentacao" name="movimentacao" placeholder="Descrição da Movimentação" class="form-control remove-color-input white" disabled="disabled">
+                        <input type="hidden" name="_csrf_token" id="_csrf_token" value="{{ csrf_token() }}" />   
+                        <input type="hidden" name="_has_conta" id="_has_conta" value="{{ hasConta() }}" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label tam-fonte" for="valor">Valor:</label>
+                    <div class="col-sm-3">
+                        <input type="text" id="valor" name="valor" placeholder=" R$ 0,00" class="form-control remove-color-input white" disabled="disabled">
+                    </div>
+
+                    <label class="col-sm-2 control-label tam-fonte" for="categoria">Categoria:</label>
+                    <div class="col-sm-4">
+                        <select class="form-control" name="categoria" id="categoria" disabled="disabled"/>
+                            <option></option>
+                                {% for categoria in categorias %}
+                                <option value="{{ categoria.id }}">{{ categoria.nome_categoria }}</option>
+                                {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Form actions -->
+                <div class="form-group">
+                    <div class="col-md-4 col-md-offset-2 text-left">
+                        <button type="button" class="btn btn-primary btn-md" id="btn-nov-categoria">Novo</button>
+                        <button type="submit" class="btn btn-primary btn-md" id="btn-cad-categoria" disabled>Agendar</button>
+                    </div>
+                    <div class="col-md-4 col-md-offset-1 text-left" id="div-msg-cadastro-categoria">
+                        <span class='alert alert-success msgSuccess' id='span-success-cadastro-categoria'>Sucesso </span>
+                    </div>
+                </div>
+
+            </fieldset>
+            </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

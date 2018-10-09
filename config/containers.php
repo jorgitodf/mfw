@@ -77,5 +77,13 @@ $container['account_type_model'] = function($c) {
     return new \App\Models\AccountType($c);
 };
 
+$container['scheduled_payments_model'] = function($c) {
+    return new \App\Models\ScheduledPayments($c);
+};
+
+$container['categories_model'] = function($c) {
+    return new \App\Models\Categories($c);
+};
+
 
 return $container;
