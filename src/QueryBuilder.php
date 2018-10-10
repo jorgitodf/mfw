@@ -9,13 +9,19 @@ class QueryBuilder
 
     public function select(string $table)
     {
-        $this->sql = "SELECT * FROM `{$table}`";
+        $this->sql = "SELECT * FROM `{$table}` t1";
         return $this;
     }
 
     public function selectOrderBy(string $table, string $value)
     {
         $this->sql = "SELECT * FROM `{$table}` ORDER BY `{$value}` ASC";
+        return $this;
+    }
+
+    public function selectOrderByWhere(string $table, string $field, string $value1, string $value2)
+    {
+        $this->sql = "SELECT * FROM `{$table}` WHERE {$field} = '$value1' ORDER BY `{$value2}` ASC";
         return $this;
     }
 
@@ -76,7 +82,6 @@ class QueryBuilder
 
     public function between(string $field, string $date1, string $date2)
     {
-
         if (!$this->sql) {
             throw new \Exception("Select(), Update() or Delete() is required before between() method");
         }
@@ -86,6 +91,16 @@ class QueryBuilder
         }
 
         $this->sql .= " AND " . $field . " BETWEEN '". $date1 ."' AND '". $date2 ."' ORDER BY {$field}";
+        return $this;
+    }
+
+    public function join(string $table2, $value)
+    {
+        if (!$this->sql) {
+            throw new \Exception("Select(), Update() or Delete() is required before join() method");
+        }
+
+        $this->sql .= " JOIN `{$table2}` t2 ON (t2.id = t1.fk_accounts) WHERE t2.id = {$value} ORDER BY t1.id DESC LIMIT 1";
         return $this;
     }
 

@@ -86,5 +86,9 @@ $container['categories_model'] = function($c) {
     return new \App\Models\Categories($c);
 };
 
+$container['extracts_model'] = function($c) {
+    return new \App\Models\Extracts($c);
+};
+
 
 return $container;

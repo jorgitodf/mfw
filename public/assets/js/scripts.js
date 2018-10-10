@@ -66,6 +66,19 @@ $(document).ready(function () {
     });
 
     $(function(){
+        $(".remove-color-input-money").click(function(){
+            $(this).val("").css("background", "white");
+            $(this).val("R$ ");
+            $(this).attr("type", "text").css("color", "black");
+        });
+        $(".remove-color-input-money").focus(function () {
+            $(this).val("").css("background", "white");
+            $(this).val("R$ ");
+            $(this).attr("type", "text").css("color", "black");
+        });
+    });
+
+    $(function(){
         $(".remove-color-input").click(function(){
             $(this).val("").css("background", "white");
             $(this).attr("type", "text").css("color", "black");
@@ -158,95 +171,283 @@ $(document).ready(function () {
     });
 
 
-        // AGENDAMENTO DE PAGAMENTO
-        $('#btn-nov-agd-pgto').click(function () {
-            $("#btn-cad-agd-pgto").removeAttr('disabled');
-            $("#btn-nov-agd-pgto").attr('disabled', 'disabled');
-            $("#data_pagamento").removeAttr('disabled');
-            $("#data_pagamento").focus();
-            $("#movimentacao").removeAttr('disabled');
-            $("#valor").removeAttr('disabled');
-            $("#categoria").removeAttr('disabled');
-            $("#data_pagamento").css("background", "white");
-            $("#movimentacao").css("background", "white");
-            $("#valor").css("background", "white");
-            $("#categoria").css("background", "white");
-            $('#span-success-cadastro-agd-pgto').remove();
-            $("#data_pagamento").val("");
-            $("#movimentacao").val("");
-            $("#valor").val("");
-            $("#categoria").val("");
-        });
-    
-        $(function () {
-            $("#formCadAgendamentoPagamento").submit(function(e) {
-                let url = $("#formCadAgendamentoPagamento").attr("action");
-                let data_pagamento = $("#data_pagamento").val();
-                let movimentacao = $("#movimentacao").val();
-                if (movimentacao == 'Preencha a Movimentação!') {
-                    movimentacao = "";
-                }
-                let valor = $("#valor").val();
-                if (valor == 'Preencha o Valor!') {
-                    valor = "";
-                }
-                let categoria = $("#categoria").val();
-                if (categoria == 'Preencha a Categoria!') {
-                    categoria = "";
-                }
-                let _csrf_token = $("#_csrf_token").val();
-                let data = {data_pagamento: data_pagamento, movimentacao: movimentacao, valor: valor,
-                    categoria: categoria, _csrf_token: _csrf_token};
-                e.preventDefault();
-    
-                axios.post(url, simpleQueryString.stringify(data))
-                    .then(function(response) {
-                        if (response.status == 201) {
-                            $("#btn-cad-agd-pgto").attr('disabled', 'disabled');
-                            $("#btn-nov-agd-pgto").removeAttr('disabled');
-                            $("#data_pagamento").attr('disabled', 'disabled');
-                            $("#movimentacao").attr('disabled', 'disabled');
-                            $("#valor").attr('disabled', 'disabled');
-                            $("#categoria").attr('disabled', 'disabled');
-                            $(".white").css("background", "#ffffb1");
-                            $("#div-msg-cadastro-agd-pgto").html("<span class='alert alert-success msgSuccess' id='span-success-cadastro-agd-pgto'>"+ response.data['success'] +"</span>").css("display", "block");
-                        }
-                    })
-                    .catch(function(error) {
-                        if (error.response.status == 500) {
-                            if (!error.response.data.error['error_data_pgto'] == "") {
-                                $("#data_pagamento").html(error.response.data.error['error_data_pgto']).css("background", cor_input).css("color", "white");
-                            } else {
-                                $("#data_pagamento").css("background", "#ffffb1");
-                            }
-    
-                            if (!error.response.data.error['error_movimentacao'] == "") {
-                                $("#movimentacao").val(error.response.data.error['error_movimentacao']).css("background", cor_input).css("color", "white");
-                            } else {
-                                $("#movimentacao").css("background", "#ffffb1");
-                            }
+    // FORMULÁRIO DE CRÉDITO CONTA
+    $('#btn-nov-credito').click(function () {
+        $("#btn-cad-credito").removeAttr('disabled');
+        $("#btn-nov-credito").attr('disabled', 'disabled');
+        $("#data_movimentacao_deb").removeAttr('disabled');
+        $("#data_movimentacao_deb").focus();
+        $("#movimentacao").removeAttr('disabled');
+        $("#valor").removeAttr('disabled');
+        $("#categoria").removeAttr('disabled');
+        $("#data_movimentacao_deb").css("background", "white");
+        $("#movimentacao").css("background", "white");
+        $("#valor").css("background", "white");
+        $("#categoria").css("background", "white");
+        $('#span-success-cadastro-credito').remove();
+        $("#data_movimentacao_deb").val("");
+        $("#movimentacao").val("");
+        $("#valor").val("");
+        $("#categoria").val("");
+    });
+    $(function () {
+        $("#formCadCredito").submit(function(e) {
+            let url = $("#formCadCredito").attr("action");
+            let data_movimentacao_deb = $("#data_movimentacao_deb").val();
+            let movimentacao = $("#movimentacao").val();
+            if (movimentacao == 'Preencha a Movimentação!' || movimentacao == 'Movimentação sem Números!' || movimentacao == 'Movimentação acima de 3 caracters!') {
+                movimentacao = "";
+            }
+            let valor = $("#valor").val();
+            if (valor == 'Preencha o Valor!') {
+                valor = "";
+            }
+            let categoria = $("#categoria").val();
+            if (categoria == 'Preencha a Categoria!') {
+                categoria = "";
+            }
+            let _csrf_token = $("#_csrf_token").val();
+            let data = {data_movimentacao_deb: data_movimentacao_deb, movimentacao: movimentacao, valor: valor,
+                categoria: categoria, _csrf_token: _csrf_token};
+            e.preventDefault();
 
-                            if (!error.response.data.error['error_valor'] == "") {
-                                $("#valor").val(error.response.data.error['error_valor']).css("background", cor_input).css("color", "white");
-                            } else {
-                                $("#valor").css("background", "#ffffb1");
-                            }
-
-                            if (!error.response.data.error['error_categoria'] == "") {
-                                $("#categoria").find('option:selected').html(error.response.data.error['error_categoria']);
-                                $("#categoria").css("background", cor_input).css("color", "white");
-                            } else {
-                                $("#categoria").css("background", "#ffffb1").css("color", "black");
-                            }
-    
-                            if (!error.response.data.error['error-token-banco'] == "") {
-                                $("#div-msg-cadastro-banco").html("<span class='alert alert-danger msgError' id='span-success-cadastro-banco'>"+ error.response.data.error['error-token-banco'] +"</span>").css("display", "block");
-                            }
-    
+            axios.post(url, simpleQueryString.stringify(data))
+                .then(function(response) {
+                    if (response.status == 201) {
+                        $("#btn-cad-credito").attr('disabled', 'disabled');
+                        $("#btn-nov-credito").removeAttr('disabled');
+                        $("#data_movimentacao_deb").attr('disabled', 'disabled');
+                        $("#movimentacao").attr('disabled', 'disabled');
+                        $("#valor").attr('disabled', 'disabled');
+                        $("#categoria").attr('disabled', 'disabled');
+                        $(".white").css("background", "#ffffb1");
+                        $("#div-msg-cadastro-credito").html("<span class='alert alert-success msgSuccess' id='span-success-cadastro-credito'>"+ response.data['success'] +"</span>").css("display", "block");
+                    }
+                })
+                .catch(function(error) {
+                    if (error.response.status == 500) {
+                        if (!error.response.data.error['error_data_mov'] == "") {
+                            $("#data_movimentacao_deb").html(error.response.data.error['error_data_mov']).css("background", "#EBA8A3").css("color", "white");
+                        } else {
+                            $("#data_movimentacao_deb").css("background", "#ffffb1");
                         }
-                    })
-            });    
-        });
+
+                        if (!error.response.data.error['error_mov'] == "") {
+                            $("#movimentacao").val(error.response.data.error['error_mov']).css("background", "#EBA8A3").css("color", "white");
+                        } else {
+                            $("#movimentacao").css("background", "#ffffb1");
+                        }
+
+                        if (!error.response.data.error['error_valor'] == "") {
+                            $("#valor").val(error.response.data.error['error_valor']).css("background", "#EBA8A3").css("color", "white");
+                        } else {
+                            $("#valor").css("background", "#ffffb1");
+                        }
+
+                        if (!error.response.data.error['error_categoria'] == "") {
+                            $("#categoria").find('option:selected').html(error.response.data.error['error_categoria']);
+                            $("#categoria").css("background", "#EBA8A3").css("color", "white");
+                        } else {
+                            $("#categoria").css("background", "#ffffb1").css("color", "black");
+                        }
+
+                        if (!error.response.data.error['error_saldo'] == "") {
+                            $("#div-msg-cadastro-credito").html("<span class='alert alert-danger msgError' id='span-success-cadastro-credito'>"+ error.response.data.error['error_saldo'] +"</span>").css("display", "block");
+                        }
+
+                        if (!error.response.data.error['error_token_conta'] == "") {
+                            $("#div-msg-cadastro-credito").html("<span class='alert alert-danger msgError' id='span-success-cadastro-credito'>"+ error.response.data.error['error_token_conta'] +"</span>").css("display", "block");
+                        }
+
+                    }
+                })
+        });    
+    });
+
+
+    // FORMULÁRIO DE DÉBITO CONTA
+    $('#btn-nov-debito').click(function () {
+        $("#btn-cad-debito").removeAttr('disabled');
+        $("#btn-nov-debito").attr('disabled', 'disabled');
+        $("#data_movimentacao_deb").removeAttr('disabled');
+        $("#data_movimentacao_deb").focus();
+        $("#movimentacao").removeAttr('disabled');
+        $("#valor").removeAttr('disabled');
+        $("#categoria").removeAttr('disabled');
+        $("#data_movimentacao_deb").css("background", "white");
+        $("#movimentacao").css("background", "white");
+        $("#valor").css("background", "white");
+        $("#categoria").css("background", "white");
+        $('#span-success-cadastro-debito').remove();
+        $("#data_movimentacao_deb").val("");
+        $("#movimentacao").val("");
+        $("#valor").val("");
+        $("#categoria").val("");
+    });
+    $(function () {
+        $("#formCadDebito").submit(function(e) {
+            let url = $("#formCadDebito").attr("action");
+            let data_movimentacao_deb = $("#data_movimentacao_deb").val();
+            let movimentacao = $("#movimentacao").val();
+            if (movimentacao == 'Preencha a Movimentação!' || movimentacao == 'Movimentação sem Números!' || movimentacao == 'Movimentação acima de 3 caracters!') {
+                movimentacao = "";
+            }
+            let valor = $("#valor").val();
+            if (valor == 'Preencha o Valor!') {
+                valor = "";
+            }
+            let categoria = $("#categoria").val();
+            if (categoria == 'Preencha a Categoria!') {
+                categoria = "";
+            }
+            let _csrf_token = $("#_csrf_token").val();
+            let data = {data_movimentacao_deb: data_movimentacao_deb, movimentacao: movimentacao, valor: valor,
+                categoria: categoria, _csrf_token: _csrf_token};
+            e.preventDefault();
+
+            axios.post(url, simpleQueryString.stringify(data))
+                .then(function(response) {
+                    if (response.status == 201) {
+                        $("#btn-cad-debito").attr('disabled', 'disabled');
+                        $("#btn-nov-debito").removeAttr('disabled');
+                        $("#data_movimentacao_deb").attr('disabled', 'disabled');
+                        $("#movimentacao").attr('disabled', 'disabled');
+                        $("#valor").attr('disabled', 'disabled');
+                        $("#categoria").attr('disabled', 'disabled');
+                        $(".white").css("background", "#ffffb1");
+                        $("#div-msg-cadastro-debito").html("<span class='alert alert-success msgSuccess' id='span-success-cadastro-debito'>"+ response.data['success'] +"</span>").css("display", "block");
+                    }
+                })
+                .catch(function(error) {
+                    if (error.response.status == 500) {
+                        if (!error.response.data.error['error_data_mov'] == "") {
+                            $("#data_movimentacao_deb").html(error.response.data.error['error_data_mov']).css("background", "#EBA8A3").css("color", "white");
+                        } else {
+                            $("#data_movimentacao_deb").css("background", "#ffffb1");
+                        }
+
+                        if (!error.response.data.error['error_mov'] == "") {
+                            $("#movimentacao").val(error.response.data.error['error_mov']).css("background", "#EBA8A3").css("color", "white");
+                        } else {
+                            $("#movimentacao").css("background", "#ffffb1");
+                        }
+
+                        if (!error.response.data.error['error_valor'] == "") {
+                            $("#valor").val(error.response.data.error['error_valor']).css("background", "#EBA8A3").css("color", "white");
+                        } else {
+                            $("#valor").css("background", "#ffffb1");
+                        }
+
+                        if (!error.response.data.error['error_categoria'] == "") {
+                            $("#categoria").find('option:selected').html(error.response.data.error['error_categoria']);
+                            $("#categoria").css("background", "#EBA8A3").css("color", "white");
+                        } else {
+                            $("#categoria").css("background", "#ffffb1").css("color", "black");
+                        }
+
+                        if (!error.response.data.error['error_saldo'] == "") {
+                            $("#div-msg-cadastro-debito").html("<span class='alert alert-danger msgError' id='span-success-cadastro-debito'>"+ error.response.data.error['error_saldo'] +"</span>").css("display", "block");
+                        }
+
+                        if (!error.response.data.error['error_token_conta'] == "") {
+                            $("#div-msg-cadastro-debito").html("<span class='alert alert-danger msgError' id='span-success-cadastro-debito'>"+ error.response.data.error['error_token_conta'] +"</span>").css("display", "block");
+                        }
+
+                    }
+                })
+        });    
+    });
+
+
+    // AGENDAMENTO DE PAGAMENTO
+    $('#btn-nov-agd-pgto').click(function () {
+        $("#btn-cad-agd-pgto").removeAttr('disabled');
+        $("#btn-nov-agd-pgto").attr('disabled', 'disabled');
+        $("#data_pagamento").removeAttr('disabled');
+        $("#data_pagamento").focus();
+        $("#movimentacao").removeAttr('disabled');
+        $("#valor").removeAttr('disabled');
+        $("#categoria").removeAttr('disabled');
+        $("#data_pagamento").css("background", "white");
+        $("#movimentacao").css("background", "white");
+        $("#valor").css("background", "white");
+        $("#categoria").css("background", "white");
+        $('#span-success-cadastro-agd-pgto').remove();
+        $("#data_pagamento").val("");
+        $("#movimentacao").val("");
+        $("#valor").val("");
+        $("#categoria").val("");
+    });
+
+    $(function () {
+        $("#formCadAgendamentoPagamento").submit(function(e) {
+            let url = $("#formCadAgendamentoPagamento").attr("action");
+            let data_pagamento = $("#data_pagamento").val();
+            let movimentacao = $("#movimentacao").val();
+            if (movimentacao == 'Preencha a Movimentação!') {
+                movimentacao = "";
+            }
+            let valor = $("#valor").val();
+            if (valor == 'Preencha o Valor!') {
+                valor = "";
+            }
+            let categoria = $("#categoria").val();
+            if (categoria == 'Preencha a Categoria!') {
+                categoria = "";
+            }
+            let _csrf_token = $("#_csrf_token").val();
+            let data = {data_pagamento: data_pagamento, movimentacao: movimentacao, valor: valor,
+                categoria: categoria, _csrf_token: _csrf_token};
+            e.preventDefault();
+
+            axios.post(url, simpleQueryString.stringify(data))
+                .then(function(response) {
+                    if (response.status == 201) {
+                        $("#btn-cad-agd-pgto").attr('disabled', 'disabled');
+                        $("#btn-nov-agd-pgto").removeAttr('disabled');
+                        $("#data_pagamento").attr('disabled', 'disabled');
+                        $("#movimentacao").attr('disabled', 'disabled');
+                        $("#valor").attr('disabled', 'disabled');
+                        $("#categoria").attr('disabled', 'disabled');
+                        $(".white").css("background", "#ffffb1");
+                        $("#div-msg-cadastro-agd-pgto").html("<span class='alert alert-success msgSuccess' id='span-success-cadastro-agd-pgto'>"+ response.data['success'] +"</span>").css("display", "block");
+                    }
+                })
+                .catch(function(error) {
+                    if (error.response.status == 500) {
+                        if (!error.response.data.error['error_data_pgto'] == "") {
+                            $("#data_pagamento").html(error.response.data.error['error_data_pgto']).css("background", cor_input).css("color", "white");
+                        } else {
+                            $("#data_pagamento").css("background", "#ffffb1");
+                        }
+
+                        if (!error.response.data.error['error_movimentacao'] == "") {
+                            $("#movimentacao").val(error.response.data.error['error_movimentacao']).css("background", cor_input).css("color", "white");
+                        } else {
+                            $("#movimentacao").css("background", "#ffffb1");
+                        }
+
+                        if (!error.response.data.error['error_valor'] == "") {
+                            $("#valor").val(error.response.data.error['error_valor']).css("background", cor_input).css("color", "white");
+                        } else {
+                            $("#valor").css("background", "#ffffb1");
+                        }
+
+                        if (!error.response.data.error['error_categoria'] == "") {
+                            $("#categoria").find('option:selected').html(error.response.data.error['error_categoria']);
+                            $("#categoria").css("background", cor_input).css("color", "white");
+                        } else {
+                            $("#categoria").css("background", "#ffffb1").css("color", "black");
+                        }
+
+                        if (!error.response.data.error['error-token-banco'] == "") {
+                            $("#div-msg-cadastro-banco").html("<span class='alert alert-danger msgError' id='span-success-cadastro-banco'>"+ error.response.data.error['error-token-banco'] +"</span>").css("display", "block");
+                        }
+
+                    }
+                })
+        });    
+    });
 
     // ACESSA CONTA 
     $(function () {

@@ -47,6 +47,14 @@ abstract class Model
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
+    public function allOrderByWhere(string $field, string $value1, string $value2)
+    {
+        $query = $this->queryBuilder->selectOrderByWhere($this->table, $field, $value1, $value2)->getData();
+        $stmt = $this->db->prepare($query->sql);
+        $stmt->execute($query->bind);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
     public function getById(array $conditions)
     {
         $query = $this->queryBuilder->select($this->table)->where($conditions)->getData();
@@ -68,11 +76,18 @@ abstract class Model
     public function between(array $conditions_1, string $field, string $date1, string $date2)
     {
         $query = $this->queryBuilder->select($this->table)->where($conditions_1)->between($field, $date1, $date2)->getData();
-
         $stmt = $this->db->prepare($query->sql);
         $stmt->execute($query->bind);
 
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    public function saldo(string $table2, $value)
+    {
+        $query = $this->queryBuilder->select($this->table)->join($table2, $value)->getData();
+        $stmt = $this->db->prepare($query->sql);
+        $stmt->execute($query->bind);
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
 
     public function findBy(array $conditions)

@@ -4,9 +4,9 @@ namespace App\Models;
 
 use App\Mfw\Model;
 
-class Accounts extends Model
+class Extracts extends Model
 {
-    protected $table = 'accounts';
+    protected $table = 'extracts';
 
     
     public function getTable() 
@@ -14,6 +14,3 @@ class Accounts extends Model
         return $this->table;
     }
 }
-
-
-

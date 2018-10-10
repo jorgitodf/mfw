@@ -184,7 +184,49 @@ select option:checked {
 }
 
 
-/* FOMMULÁRIO AGENDAMENTO DE PAGAMENTOS */
+/* FOMULÁRIO DEBITAR VALOR CONTA */
+#formCadDebito {
+    height: 240px;
+}
+#well_debito {
+    width: 102%;
+}
+#div-msg-cadastro-debito {
+    display: none;
+}
+#div-msg-cadastro-debito {
+    float: left;
+    position: relative;
+}
+#span-success-cadastro-debito {
+    padding: 7.5px;
+    width: 260px;
+    position: absolute;
+}
+
+/* FOMULÁRIO CREDITAR VALOR CONTA */
+#formCadCredito {
+    height: 240px;
+}
+#well_credito {
+    width: 102%;
+}
+#div-msg-cadastro-credito {
+    display: none;
+}
+#div-msg-cadastro-credito {
+    float: left;
+    position: relative;
+}
+#span-success-cadastro-credito {
+    padding: 7.5px;
+    width: 260px;
+    position: absolute;
+}
+
+
+
+/* FOMULÁRIO AGENDAMENTO DE PAGAMENTOS */
 #div-principal-agd-pgto {
     margin-top: 5%;
     margin-left: 15.8%;
@@ -252,4 +294,10 @@ select option:checked {
 #table_pgto_agendado tfoot {
     background-color: #E9B65C;
     font-weight: bold;
+}
+
+.div-principal {
+    margin-top: 5%;
+    margin-left: 15.5%;
+    width: 83%;
 }

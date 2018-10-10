@@ -19,6 +19,10 @@ $router->add('POST', '/conta/create', '\App\Controllers\ContaController::create'
 $router->add('GET', '/conta/list', '\App\Controllers\ContaController::list');
 $router->add('GET', '/conta/clean-session-conta', '\App\Controllers\ContaController::cleanSessionConta');
 $router->add('GET', '/conta', '\App\Controllers\ContaController::cleanContaSession');
+$router->add('GET', '/conta/debitar', '\App\Controllers\ContaController::debitar');
+$router->add('POST', '/conta/debitar', '\App\Controllers\ContaController::debitar');
+$router->add('GET', '/conta/creditar', '\App\Controllers\ContaController::creditar');
+$router->add('POST', '/conta/creditar', '\App\Controllers\ContaController::creditar');
 
 $router->add('GET', '/banco', '\App\Controllers\BancoController::index');
 $router->add('GET', '/bancos', '\App\Controllers\BancoController::all');
