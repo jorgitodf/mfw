@@ -65,7 +65,7 @@ class ValidationDebitoCredito
 
     public function formateCredito($data, $idConta, $c)
     {
-        $extrato = $c['extracts_model']->saldo($c['accounts_model']->getTable(), 1);
+        $extrato = $c['extracts_model']->slado($c['accounts_model']->getTable(), 1);
         $d['data_movimentacao'] = trim($data['data_movimentacao_deb']);
         $d['mes'] = verificaMes();
         $d['tipo_operacao'] = 'Crédito';

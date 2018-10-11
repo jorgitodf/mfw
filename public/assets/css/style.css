@@ -225,6 +225,10 @@ select option:checked {
 }
 
 
+/* EXTATO */
+#well_extrato {
+    width: 102%;
+}
 
 /* FOMULÁRIO AGENDAMENTO DE PAGAMENTOS */
 #div-principal-agd-pgto {
@@ -296,8 +300,11 @@ select option:checked {
     font-weight: bold;
 }
 
-.div-principal {
-    margin-top: 5%;
-    margin-left: 15.5%;
-    width: 83%;
+@media screen and (max-width: 1440px) {
+    .div-principal {
+        margin-top: 4.5%;
+        margin-left: 14.8%;
+        width: 83%;
+    }
 }
+

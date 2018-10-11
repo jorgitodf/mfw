@@ -12,14 +12,14 @@
             <ul class="sub-menu collapse" id="bancos">
                 <li class="active"><a href="{{base_url()}}/banco">Novo Banco</a></li>
                 <li><a href="#">Alterar Banco</a></li>
-                <li><a href="{{base_url()}}/bancos">Todos Bancos</a></li>
+                <li><a href="{{ base_url() }}/bancos">Todos Bancos</a></li>
             </ul>
 
             <li data-toggle="collapse" data-target="#contas" class="collapsed">
                 <a><i class="fa fa-money fa-lg"></i> Contas <span class="arrow"></span></a>
             </li>
             <ul class="sub-menu collapse" id="contas">
-                <li class="active"><a href="{{base_url()}}/conta/new">Nova Conta</a></li>
+                <li class="active"><a href="{{ base_url() }}/conta/new">Nova Conta</a></li>
                 <li><a href="#">Alterar Conta</a></li>
                 <li><a href="/conta">Trocar de Conta</a></li>
             </ul>
@@ -28,7 +28,7 @@
                 <a href="#"><i class="fa fa-newspaper-o fa-lg"></i> Extratos <span class="arrow"></span></a>
             </li>
             <ul class="sub-menu collapse" id="products">
-                <li class="active"><a href="#">Mês Atual</a></li>
+                <li class="active"><a href="{{ base_url() }}/extrato">Mês Atual</a></li>
                 <li><a href="#">Por Período</a></li>
             </ul>
 

@@ -1,0 +1,7 @@
+https://gist.github.com/Mikodes/be9b9ce42e46c3d4ccb6
+
+Identar
+Ctrl+Alt+L
+
+Comentário
+Ctrl+Shift+/
