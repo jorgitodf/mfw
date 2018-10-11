@@ -104,6 +104,22 @@ class QueryBuilder
         return $this;
     }
 
+    public function innerJoin(string $table2, $value1, $value2, $tableWhere, $fieldWhere, $fieldBetween = null, $date1Between = null, $date2Between = null)
+    {
+        if (!$this->sql) {
+            throw new \Exception("Select(), Update() or Delete() is required before InnerJoin() method");
+        }
+
+        if (!$fieldBetween && !$date1Between && !$date2Between) {
+            $this->sql .= " JOIN `{$table2}` t2 ON (t2.id = t1.{$value1}) WHERE {$tableWhere}.{$fieldWhere} = {$value2}";
+        } else {
+            $this->sql .= " JOIN `{$table2}` t2 ON (t2.id = t1.{$value1}) WHERE {$tableWhere}.{$fieldWhere} = {$value2} AND {$fieldBetween} BETWEEN '{$date1Between}' AND '{$date2Between}' ";
+        }
+
+        
+        return $this;
+    }
+
     public function getData() :\stdClass
     {
         $query = new \stdClass;

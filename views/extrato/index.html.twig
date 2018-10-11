@@ -7,20 +7,11 @@
         <div class="row">
             <div class="col-md-11 col-md-offset-1">
                 <div class="well well-sm sombra" id="well_extrato">
-                    <p>{{ data }}</p>
-
-                    {% if contas is not empty and hasConta() is empty %}
-
-                        {% include 'home/_table_contas.html.twig' %}
-
-                    {% elseif contas is not empty and hasConta() is not empty %}
-
+                    {% if hasConta() is not empty and extrato is not empty %}
                         {% include 'extrato/_table_extrato.html.twig' %}
-                        <input type="hidden" name="_has_conta" id="_has_conta" value="{{ hasConta() }}" />
-                        <input type="hidden" name="_csrf_token" id="_csrf_token" value="{{ csrf_token() }}" />
-
+                    {% else %}
+                        {% include 'extrato/_table_sem_extrato.html.twig' %}
                     {% endif %}
-
                 </div>
             </div>
         </div>

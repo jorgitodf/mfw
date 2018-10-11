@@ -90,6 +90,14 @@ abstract class Model
         return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
 
+    public function innerJoin($table2, $value1, $value2, $tableWhere, $fieldWhere, $fieldBetween = null, $date1Between = null, $date2Between = null)
+    {
+        $query = $this->queryBuilder->select($this->table)->innerJoin($table2, $value1, $value2, $tableWhere, $fieldWhere, $fieldBetween, $date1Between, $date2Between)->getData();
+        $stmt = $this->db->prepare($query->sql);
+        $stmt->execute($query->bind);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
     public function findBy(array $conditions)
     {
         $query = $this->queryBuilder->select($this->table)->where($conditions)->getData();

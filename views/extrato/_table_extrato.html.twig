@@ -1,0 +1,39 @@
+<table class="table table-striped table-hover table-bordered table-condensed display" id="table_extrato">
+    <thead>
+        <tr>
+            <th class="th">Data</th>
+            <th class="th">Movimentação</th>
+            <th class="th">Categoria</th>
+            <th class="th">Valor</th>
+            <th class="th">Saldo</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for ext in extrato %}
+        <tr>
+        {% if ext.tipo == 'D' %}
+            <td class='fonte_data td'>{{ ext.data_movimentacao|date("d/m/Y") }}</td>
+            {% if ext.despesa_fixa == 'S' %}
+            <td class='fonte_despesa td'>{{ ext.movimentacao }}</td>
+            <td class='fonte_despesa td'>{{ ext.nome_categoria }}</td>
+            <td class='fonte_despesa td'>R$ {{ ext.valor|number_format(2, ',', '.') }}</td>
+            <td class='fonte_despesa td'>R$ {{ ext.saldo|number_format(2, ',', '.') }}</td>
+            {% else %}   
+            <td class='fonte_despesa_fixa td'>{{ ext.movimentacao }}</td>
+            <td class='fonte_despesa_fixa td'>{{ ext.nome_categoria }}</td>
+            <td class='fonte_despesa_fixa td'>R$ {{ ext.valor|number_format(2, ',', '.') }}</td>
+            <td class='fonte_despesa_fixa td'>R$ {{ ext.saldo|number_format(2, ',', '.') }}</td>
+            {% endif %}    
+        {% else %}   
+            <td class='fonte_data td'>{{ ext.data_movimentacao|date("d/m/Y") }}</td>
+            <td class='fonte_receita td'>{{ ext.movimentacao }}</td>
+            <td class='fonte_receita td'>{{ ext.nome_categoria }}</td>
+            <td class='fonte_receita td'>R$ {{ ext.valor|number_format(2, ',', '.') }}</td>
+            <td class='fonte_receita td'>R$ {{ ext.saldo|number_format(2, ',', '.') }}</td>
+        {% endif %}     
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<input type="hidden" name="_has_conta" id="_has_conta" value="{{ hasConta() }}" />
+<input type="hidden" name="_csrf_token" id="_csrf_token" value="{{ csrf_token() }}" />

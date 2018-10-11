@@ -1,0 +1,46 @@
+{% extends "templates/layout.html.twig" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <div class="container col-md-9 div-principal">
+        <div class="row">
+            <div class="col-md-11 col-md-offset-1">
+                <div class="well well-sm sombra" id="well_extrato">
+
+                <form class="form-horizontal" role="form" action="{{ base_url() }}/extrato/periodo" method="post" id="formExtratoPeriodo">
+                <fieldset>
+                    <legend class="text-center">Extrato por Período</legend>
+                    <div class="form-group col-md-12">
+                        <label class="col-sm-2 control-label tam-fonte" for="data_final">Data Inicial:</label>
+                        <div class="col-sm-4">
+                            <input type="date" id="data_final" name="data_final" class="form-control remove-color-input-date white" autofocus="autofocus" disabled="disabled"/>
+                        </div>
+
+                        <label class="col-sm-2 control-label tam-fonte" for="data_final">Data Final:</label>
+                        <div class="col-sm-4">
+                            <input type="date" id="data_final" name="data_final" class="form-control remove-color-input-date white" disabled="disabled"/>
+                            <input type="hidden" name="_csrf_token" id="_csrf_token" value="{{ csrf_token() }}" />   
+                            <input type="hidden" name="_has_conta" id="_has_conta" value="{{ hasConta() }}" />
+                        </div>
+                    </div>
+
+                    <!-- Form actions -->
+                    <div class="form-group col-md-12">
+                        <div class="col-md-4 col-md-offset-2 text-left">
+                            <button type="button" class="btn btn-primary btn-md" id="btn-nov-extrato">Novo</button>
+                            <button type="submit" class="btn btn-primary btn-md" id="btn-bus-extrato" disabled>Buscar</button>
+                        </div>
+                        <div class="col-md-4 col-md-offset-1 text-left" id="div-msg-extrato">
+                            
+                        </div>
+                    </div>
+
+                </fieldset>
+                </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

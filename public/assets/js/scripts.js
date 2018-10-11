@@ -1,5 +1,15 @@
 $(document).ready(function () {
 
+    $(document).ready(function() {
+        $('#table_extrato').DataTable( {
+            "scrollY": "470px",
+            "scrollCollapse": true,
+            "paging":         false,
+            "bInfo" : false,
+            "searching": false
+        } );
+    } );
+
     jQuery.browser = {};
     (function () {
         jQuery.browser.msie = false;

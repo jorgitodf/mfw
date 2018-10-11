@@ -1,5 +1,19 @@
 <?php
 
+function data_inicial()
+{
+    $ano = date("Y");
+    $mes = date("m");
+    return "{$ano}-{$mes}-01";
+}
+
+function data_final()
+{
+    $ano = date("Y");
+    $mes = date("m");
+    return "{$ano}-{$mes}-31";
+}
+
 function dd($value)
 {
     $dd = var_dump($value);exit;

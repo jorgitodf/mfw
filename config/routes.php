@@ -29,6 +29,8 @@ $router->add('GET', '/bancos', '\App\Controllers\BancoController::all');
 $router->add('POST', '/banco/create', '\App\Controllers\BancoController::create');
 
 $router->add('GET', '/extrato', '\App\Controllers\ExtratoController::index');
+$router->add('GET', '/extrato/periodo', '\App\Controllers\ExtratoController::generateExtract');
+$router->add('POST', '/extrato/periodo', '\App\Controllers\ExtratoController::generateExtract');
 
 $router->add('GET', '/pagamento', '\App\Controllers\ScheduledPaymentController::index');
 //$router->add('GET', '/pagamento', '\App\Controllers\ScheduledPaymentController::all');

@@ -111,7 +111,7 @@ class ContaController
         
         $data = $request->request->all();
         $id = (int) $_SESSION['idLoggedIn'];
-        $error = $this->validationsDebCre->validateDebito($data, $id, $c);
+        $error = $this->validationsDebCre->validateDebitoCredito($data, $id, $c);
 
         if (!$error) {
             $datas = $this->validationsDebCre->formateDebito($data, Password::hasConta(), $c);
