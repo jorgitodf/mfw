@@ -181,6 +181,67 @@ $(document).ready(function () {
     });
 
 
+    // FORMULÁRIO EXTRATO POR PERÍODO
+    $('#btn-nov-extrato').click(function () {
+        $("#btn-bus-extrato").removeAttr('disabled');
+        $("#btn-nov-extrato").attr('disabled', 'disabled');
+        $("#data_inicial").removeAttr('disabled');
+        $("#data_inicial").focus();
+        $("#data_final").removeAttr('disabled');
+        $("#data_inicial").css("background", "white");
+        $("#data_final").css("background", "white");
+        $('#span-success-bus-extrac-per').remove();
+        $("#data_inicial").val("");
+        $("#data_final").val("");
+    });
+    $(function () {
+        $("#formExtratoPeriodo").submit(function(e) {
+            let url = $("#formExtratoPeriodo").attr("action");
+            let data_inicial = $("#data_inicial").val();
+            if (data_inicial == 'Preencha a Data Inicial!') {
+                data_inicial = "";
+            }
+
+			let data_final = $("#data_final").val();
+            if (data_final == 'Preencha a Data Final!') {
+                data_final = "";
+            }			
+			
+            let _csrf_token = $("#_csrf_token").val();
+            let data = {data_inicial: data_inicial, data_final: data_final, _csrf_token: _csrf_token};
+            e.preventDefault();
+
+            axios.post(url, simpleQueryString.stringify(data))
+                .then(function(response) {
+                    if (response.status == 201) {
+                        $("#well_extrato").html(generateTableExtract(response.data.extrato));               
+                    }
+                })
+                .catch(function(error) {
+                    if (error.response.status == 500) {
+                        if (!error.response.data.error['error_data_inicial'] == "") {
+                            $("#data_inicial").attr("type", "text");
+                            $("#data_inicial").val(error.response.data.error['error_data_inicial']).css("background", "#EBA8A3").css("color", "white");
+                        } else {
+                            $("#data_inicial").css("background", "#ffffb1");
+                        }
+
+                        if (!error.response.data.error['error_data_final'] == "") {
+                            $("#data_final").attr("type", "text");
+                            $("#data_final").val(error.response.data.error['error_data_final']).attr("type", "text").css("background", "#EBA8A3").css("color", "white");
+                        } else {
+                            $("#data_final").css("background", "#ffffb1");
+                        }
+						
+                        if (!error.response.data.error['error_token_conta'] == "") {
+                            $("#div-msg-extrato").html("<span class='alert alert-danger msgError' id='span-success-bus-extrac-per'>"+ error.response.data.error['error_token_conta'] +"</span>").css("display", "block");
+                        }
+
+                    }
+                })
+        });    
+    });
+
     // FORMULÁRIO DE CRÉDITO CONTA
     $('#btn-nov-credito').click(function () {
         $("#btn-cad-credito").removeAttr('disabled');
@@ -788,14 +849,86 @@ $(document).ready(function () {
         });    
     });
 
-
-    function redirectPageLogin(base_url) {
-        return window.location.replace(base_url+"/auth/login");
-    }
-
-    function redirectPageHome(base_url) {
-        return window.location.replace(base_url + "/");
-    }
-
 });
+
+
+
+
+function redirectPageLogin(base_url) {
+    return window.location.replace(base_url+"/auth/login");
+}
+
+function redirectPageHome(base_url) {
+    return window.location.replace(base_url + "/");
+}
+
+function formateDate(inputFormat) {
+    function pad(s) { return (s < 10) ? '0' + s : s; }
+    var d = new Date(inputFormat);
+    return [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('/');
+}
+
+function numberToReal(valor) {
+    var numero = parseFloat(valor).toFixed(2).split('.');
+    numero[0] = "R$ " + numero[0].split(/(?=(?:...)*$)/).join('.');
+    return numero.join(',');
+}
+
+function generateTableExtract(datas) {
+
+    var table = "<table class='table table-striped table-hover table-bordered table-condensed display' id='table_extrato_din'>";
+    table +=  "<thead>";
+    table +=   	"<tr>";
+    table +=       "<th class='th'>Data</th>";
+    table +=       "<th class='th'>Movimentação</th>";
+    table +=       "<th class='th'>Categoria</th>";
+    table +=       "<th class='th'>Valor</th>";
+    table +=       "<th class='th'>Saldo</th>";
+    table +=    "</tr>";
+    table +=  "</thead>";
+    table +=  "<tbody>";
+    
+        for (attr in datas) {
+            table +=  "<tr>";
+            if (datas[attr].tipo == 'D') {
+                table += "<td class='fonte_data td'>" + formateDate(datas[attr].data_movimentacao) + "</td>";
+                if (datas[attr].despesa_fixa == 'S') {
+                    table += "<td class='fonte_despesa td'>" + datas[attr].movimentacao + "</td>";
+                    table += "<td class='fonte_despesa td'>" + datas[attr].nome_categoria + "</td>";
+                    table += "<td class='fonte_despesa td'>" + numberToReal(datas[attr].valor) + "</td>";
+                    table += "<td class='fonte_despesa td'>" + numberToReal(datas[attr].saldo) + "</td>";
+                } else {
+                    table += "<td class='fonte_despesa_fixa td'>" + datas[attr].movimentacao + "</td>";
+                    table += "<td class='fonte_despesa_fixa td'>" + datas[attr].nome_categoria + "</td>";
+                    table += "<td class='fonte_despesa_fixa td'>" + numberToReal(datas[attr].valor) + "</td>";
+                    table += "<td class='fonte_despesa_fixa td'>" + numberToReal(datas[attr].saldo) + "</td>";					
+                }
+            } else {
+                table += "<td class='fonte_data td'>" + formateDate(datas[attr].data_movimentacao) + "</td>";
+                table += "<td class='fonte_receita td'>" + datas[attr].movimentacao + "</td>";
+                table += "<td class='fonte_receita td'>" + datas[attr].nome_categoria + "</td>";
+                table += "<td class='fonte_receita td'>" + numberToReal(datas[attr].valor) + "</td>";
+                table += "<td class='fonte_receita td'>" + numberToReal(datas[attr].saldo) + "</td>";
+            }
+            table +=  "</tr>";	
+        }
+    
+    table +=  "</tbody>";	
+    table += "</table>";	
+
+    table += "<script>";
+    table +=    "$('#table_extrato_din').ready(function() {";
+    table +=        "$('#table_extrato_din').DataTable( {";
+    table +=        "'scrollY': '470px',";    
+    table +=        "'scrollCollapse': true,";
+    table +=        "'paging': false,";
+    table +=        "'bInfo': false,";
+    table +=        "'searching': false,";
+    table +=        "});";    
+    table +=    "});";
+    table += "</script>";
+    
+    return table;            
+}
+
 

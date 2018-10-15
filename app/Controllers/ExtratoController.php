@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Mfw\Password;
+use App\Validations\ValidationExtrato;
 
 class ExtratoController
 {
@@ -13,6 +14,7 @@ class ExtratoController
     {
         $this->userSession = Password::getSessionUser();
         $this->contaSession = Password::hasConta();
+        $this->validations = new ValidationExtrato();
     }
 
     protected function getModel($model): string
@@ -46,9 +48,19 @@ class ExtratoController
         }
         
         $data = $request->request->all();
+        $error = $this->validations->validateExtrato($data);
 
-        $extrato = $c[$this->getModel('ex')]->innerJoin($c[$this->getModel('cat')]->getTable(), 
-        'fk_category', $this->contaSession, 't1', 'fk_accounts', 't1.data_movimentacao', 
-        $data['data_inicial'], $data['data_final']);
+        if (!$error) {
+            $extrato = $c[$this->getModel('ex')]->innerJoin($c[$this->getModel('cat')]->getTable(), 
+            'fk_category', $this->contaSession, 't1', 'fk_accounts', 't1.data_movimentacao', 
+            $data['data_inicial'], $data['data_final']);
+            status_code(201);
+            return json_encode(['extrato' => $extrato, 'status' => 201]);
+        }
+
+        status_code(500);
+        return json_encode(['error' => $error, 'status' => 500]);
+
+
     }
 }
