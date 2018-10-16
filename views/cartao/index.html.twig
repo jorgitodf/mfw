@@ -1,0 +1,76 @@
+{% extends "templates/layout.html.twig" %}
+
+{% block title %}{{title}}
+{% endblock %}
+
+{% block content %}
+    <div class="container col-md-9" id="div-principal-form-cad-cartao">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="well well-sm sombra" id="well_cartao">
+                    <form class="form-horizontal" role="form" action="{{ base_url() }}/cartao/create" method="post" id="formCadCartaoCredito">
+                        <fieldset>
+                            <legend class="text-center">Cadastro de Cartão de Crédito</legend>
+
+                            <div class="form-group col-md-12">
+                                <label class="col-sm-2 control-label tam-fonte" for="numero_cartao">Número do Cartão:</label>
+                                <div class="col-sm-4">
+                                    <input type="text" id="numero_cartao" name="numero_cartao" class="form-control remove-color-input-num-card white" placeholder="0000.0000.0000.0000" disabled="disabled">
+                                </div>
+
+                                <label class="col-sm-2 control-label tam-fonte" for="data_validade">Data Validade:</label>
+                                <div class="col-sm-4">
+                                    <input type="text" id="data_validade" name="data_validade" placeholder="00/0000" class="form-control remove-color-input white" disabled="disabled">
+                                    <input type="hidden" name="_csrf_token" id="_csrf_token" value="{{ csrf_token() }}"/>
+                                    <input type="hidden" name="_has_conta" id="_has_conta" value="{{ hasConta() }}"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <label class="col-sm-2 control-label tam-fonte" for="bandeira">Bandeira:</label>
+                                <div class="col-sm-4">
+                                    <select class="form-control remove-color-option white" name="bandeira" id="bandeira" disabled="disabled"/>
+                                    <option></option>
+                                    {% for bandeira in bandeiras %}
+                                        <option value="{{ bandeira.id }}">{{ bandeira.bandeira }}</option>
+                                    {% endfor %}
+                                    </select>
+                                </div>   
+
+                                <label class="col-sm-2 control-label tam-fonte" for="banco">Banco:</label>
+                                <div class="col-sm-4">
+                                    <select class="form-control remove-color-option white" name="banco" id="banco" disabled="disabled"/>
+                                    <option></option>
+                                    {% for banco in bancos %}
+                                        <option value="{{ banco.id }}">{{ banco.nome_banco }}</option>
+                                    {% endfor %}
+                                    </select>
+                                </div>    
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <label class="col-sm-2 control-label tam-fonte" for="dia_pgto_fatura">Dia Pagamento:</label>
+                                <div class="col-sm-4">
+                                    <input type="text" id="dia_pgto_fatura" name="dia_pgto_fatura" class="form-control remove-color-input white" placeholder="Informe o Dia do Pagamento da Fatura" disabled="disabled">
+                                </div>
+                            </div>
+                        
+                            <!-- Form actions -->
+                            <div class="form-group col-md-12">
+                                <div class="col-md-4 col-md-offset-2 text-left">
+                                    <button type="button" class="btn btn-primary btn-md" id="btn-nov-cartao">Novo</button>
+                                    <button type="submit" class="btn btn-primary btn-md" id="btn-cad-cartao" disabled="disabled">Cadastrar</button>
+                                </div>
+                                <div class="col-md-5 col-sm-5 col-md-offset-1 col-sm-offset-1 text-left" id="div-msg-cadastro-cartao-credito">
+                                    
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>    
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -35,3 +35,9 @@ $router->add('POST', '/extrato/periodo', '\App\Controllers\ExtratoController::ge
 $router->add('GET', '/pagamento', '\App\Controllers\ScheduledPaymentController::index');
 //$router->add('GET', '/pagamento', '\App\Controllers\ScheduledPaymentController::all');
 $router->add('POST', '/pagamento/create', '\App\Controllers\ScheduledPaymentController::create');
+
+$router->add('GET', '/bandeira', '\App\Controllers\BandeiraCartaoController::index');
+$router->add('POST', '/bandeira/create', '\App\Controllers\BandeiraCartaoController::create');
+
+$router->add('GET', '/cartao', '\App\Controllers\CartaoController::index');
+$router->add('POST', '/cartao/create', '\App\Controllers\CartaoController::create');

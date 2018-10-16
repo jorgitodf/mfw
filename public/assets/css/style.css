@@ -465,6 +465,10 @@ select option:checked {
         margin-top: 3%;
         margin-left: 15.4%;
     }
+    .div-principal-form {
+        margin-top: 5%;
+        margin-left: 20%;
+    }
 
     /* TABELA DE EXTRATO*/
     .th {
@@ -498,5 +502,35 @@ select option:checked {
         width: 20% !important;
         text-align: left !important;
     }
+
+    /* FORMULÁRIO CADASTRO DE BANDEIRA CARTÃO */
+    #div-principal-form-cad-bandeira {
+        margin-top: 5%;
+        margin-left: 17.5%;
+    }
+    #span-msg-cadastro-bandeira {
+        padding: 7.5px;
+        width: 240px;
+        position: absolute;
+    }
+    #div_but_ban {
+        width: 183px;
+    }
+
+
+    /* FORMULÁRIO CADASTRO DE CARTÃO DE CRÉDITO */
+    #well_cartao {
+        height: 280px;
+    }
+    #div-principal-form-cad-cartao {
+        margin-top: 5%;
+        margin-left: 23.5%;
+    }
+    #span-msg-cadastro-cartao {
+        padding: 7.5px;
+        width: 240px;
+        position: absolute;
+    }
+
 }
 

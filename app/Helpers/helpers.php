@@ -14,6 +14,12 @@ function data_final()
     return "{$ano}-{$mes}-31";
 }
 
+function removePontos($numero) 
+{
+	$valor = trim(str_replace('.', '', $numero));
+	return $valor;
+}
+
 function dd($value)
 {
     $dd = var_dump($value);exit;

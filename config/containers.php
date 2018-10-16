@@ -90,5 +90,12 @@ $container['extracts_model'] = function($c) {
     return new \App\Models\Extracts($c);
 };
 
+$container['flag_cards_model'] = function($c) {
+    return new \App\Models\FlagCards($c);
+};
+
+$container['credit_cards_model'] = function($c) {
+    return new \App\Models\CreditCards($c);
+};
 
 return $container;
