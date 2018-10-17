@@ -198,6 +198,99 @@ $(document).ready(function () {
     });
 
 
+    // FORMULÁRIO DE DESPESA DE CARTÃO DE CRÉDITO
+    $('#btn-nov-desp-cartao').click(function () {
+        $("#btn-desp-cartao").removeAttr('disabled');
+        $("#btn-nov-desp-cartao").attr('disabled', 'disabled');
+        $("#descricao").removeAttr('disabled');
+        $("#descricao").focus();
+        $("#data_compra").removeAttr('disabled');
+        $("#valor").removeAttr('disabled');
+        $("#numero_parcela").removeAttr('disabled');
+        $("#descricao").css("background", "white");
+        $("#data_compra").css("background", "white");
+        $("#valor").css("background", "white");
+        $("#numero_parcela").css("background", "white");
+        $('#span-success-desp-cartao-credito').remove();
+        $("#descricao").val("");
+        $("#data_compra").val("");
+        $("#valor").val("");
+        $("#numero_parcela").val("");
+    });
+    $(function () {
+        $("#formCadDespCartaoCredito").submit(function(e) {
+            let url = $("#formCadDespCartaoCredito").attr("action");
+            let descricao = $("#descricao").val();
+            if (descricao == 'Preencha a Descrição!' || descricao == 'Descrição sem Números!' || descricao == 'Descrição acima de 3 caracters!') {
+                descricao = "";
+            }			
+            let data_compra = $("#data_compra").val();
+            if (data_compra == 'Informe a Data da Compra!') {
+                data_compra = "";
+            }
+            let valor = $("#valor").val();
+            if (valor == 'Preencha o Valor!' || valor == 'Valor somente Números!') {
+                valor = "";
+            }
+            let numero_parcela = $("#numero_parcela").val();
+            if (numero_parcela == 'Informe o Número de Parcela(s)!' || numero_parcela == 'Número de Parcela(s) somente Números') {
+                numero_parcela = "";
+            }
+            let _csrf_token = $("#_csrf_token").val();
+            let data = {descricao: descricao, data_compra: data_compra, valor: valor,
+                numero_parcela: numero_parcela, _csrf_token: _csrf_token};
+            e.preventDefault();
+
+            axios.post(url, simpleQueryString.stringify(data))
+                .then(function(response) {
+                    if (response.status == 201) {
+                        $("#btn-desp-cartao").attr('disabled', 'disabled');
+                        $("#btn-nov-desp-cartao").removeAttr('disabled');
+                        $("#descricao").attr('disabled', 'disabled');
+                        $("#data_compra").attr('disabled', 'disabled');
+                        $("#valor").attr('disabled', 'disabled');
+                        $("#numero_parcela").attr('disabled', 'disabled');
+                        $(".white").css("background", "#ffffb1");
+                        $("#div-msg-cadastro-desp-cartao-credito").html("<span class='alert alert-success msgSuccess' id='span-success-desp-cartao-credito'>"+ response.data['success'] +"</span>").css("display", "block");
+                    }
+                })
+                .catch(function(error) {
+                    if (error.response.status == 500) {
+                        if (!error.response.data.error['error_descricao'] == "") {
+                            $("#descricao").val(error.response.data.error['error_descricao']).css("background", "#EBA8A3").css("color", "white");
+                        } else {
+                            $("#descricao").css("background", "#ffffb1");
+                        }
+
+                        if (!error.response.data.error['error_data_compra'] == "") {
+                            $("#data_compra").attr("type", "text");
+                            $("#data_compra").val(error.response.data.error['error_data_compra']).css("background", "#EBA8A3").css("color", "white");
+                        } else {
+                            $("#data_compra").css("background", "#ffffb1");
+                        }
+
+                        if (!error.response.data.error['error_valor'] == "") {
+                            $("#valor").val(error.response.data.error['error_valor']).css("background", "#EBA8A3").css("color", "white");
+                        } else {
+                            $("#valor").css("background", "#ffffb1");
+                        }
+
+                        if (!error.response.data.error['error_numero_parcela'] == "") {
+                            $("#numero_parcela").find('option:selected').html(error.response.data.error['error_numero_parcela']);
+                            $("#numero_parcela").css("background", "#EBA8A3").css("color", "white");
+                        } else {
+                            $("#numero_parcela").css("background", "#ffffb1").css("color", "black");
+                        }
+
+                        if (!error.response.data.error['error_token_conta'] == "") {
+                            $("#div-msg-cadastro-desp-cartao-credito").html("<span class='alert alert-danger msgError' id='span-success-desp-cartao-credito'>"+ error.response.data.error['error_token_conta'] +"</span>").css("display", "block");
+                        }
+                    }
+                })
+        });    
+    });
+
+
     // FORMULÁRIO EXTRATO POR PERÍODO
     $('#btn-nov-extrato').click(function () {
         $("#btn-bus-extrato").removeAttr('disabled');

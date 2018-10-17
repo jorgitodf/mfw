@@ -1,0 +1,74 @@
+{% extends "templates/layout.html.twig" %}
+
+{% block title %}{{ title }}
+{% endblock %}
+
+{% block content %}
+    <div class="container col-md-9 col-sm-9" id="div-principal-form-desp-cartao">
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="well well-sm sombra" id="well_desp_cartao">
+                    <form class="form-horizontal" role="form" action="{{ base_url() }}/despesa-cartao/create" method="post" id="formCadDespCartaoCredito">
+                        <fieldset>
+                            <legend class="text-center">Despesa de Cartão de Crédito</legend>
+                        
+                            <div class="form-group col-md-12 col-sm-12">
+                                <label class="col-sm-2 col-md-2 control-label tam-fonte" for="descricao">Descrição:</label>
+                                <div class="col-sm-4 col-md-4">
+                                    <input type="text" id="descricao" name="descricao" class="form-control remove-color-input white" placeholder="Informe a Despesa" disabled="disabled">
+                                </div>
+
+                                <label class="col-sm-2 col-md-2 control-label tam-fonte" for="data_compra">Data Compra:</label>
+                                <div class="col-sm-4 col-md-4">
+                                    <input type="date" id="data_compra" name="data_compra" class="form-control remove-color-input-date white" disabled="disabled">
+                                    <input type="hidden" name="_csrf_token" id="_csrf_token" value="{{ csrf_token() }}"/>
+                                    <input type="hidden" name="_has_conta" id="_has_conta" value="{{ hasConta() }}"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-12 col-sm-12">
+                                <label class="col-sm-2 col-md-2 control-label tam-fonte" for="valor">Valor:</label>
+                                <div class="col-sm-4 col-md-4">
+                                    <input type="text" id="valor" name="valor" placeholder=" R$ 0,00" class="form-control remove-color-input-money white" disabled="disabled"/>
+                                </div>
+
+                                <label class="col-sm-2 col-md-2 control-label tam-fonte" for="numero_parcela">Parcela:</label>
+                                <div class="col-sm-4 col-md-4">
+                                    <select class="form-control remove-color-option white" name="numero_parcela" id="numero_parcela" disabled="disabled"/>
+                                        <option></option>
+                                            <option value="1">01</option>
+                                            <option value="2">02</option>
+                                            <option value="3">03</option>
+                                            <option value="4">04</option>
+                                            <option value="5">05</option>
+                                            <option value="6">06</option>
+                                            <option value="7">07</option>
+                                            <option value="8">08</option>
+                                            <option value="9">09</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Form actions -->
+                            <div class="form-group col-md-12 col-sm-12">
+                                <div class="col-md-4 col-sm-4 col-md-offset-2 col-sm-offset-2 text-left">
+                                    <button type="button" class="btn btn-primary btn-md" id="btn-nov-desp-cartao">Novo</button>
+                                    <button type="submit" class="btn btn-primary btn-md" id="btn-desp-cartao" disabled="disabled">Gravar</button>
+                                </div>
+                                <div class="col-md-5 col-sm-5 col-md-offset-1 col-sm-offset-1 text-left" id="div-msg-cadastro-desp-cartao-credito">
+                                    
+                                </div>
+                            </div>
+
+                        </fieldset>
+                    </form>
+                </div>    
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

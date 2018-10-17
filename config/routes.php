@@ -41,3 +41,6 @@ $router->add('POST', '/bandeira/create', '\App\Controllers\BandeiraCartaoControl
 
 $router->add('GET', '/cartao', '\App\Controllers\CartaoController::index');
 $router->add('POST', '/cartao/create', '\App\Controllers\CartaoController::create');
+
+$router->add('GET', '/despesa-cartao', '\App\Controllers\DespesaCartaoController::index');
+$router->add('POST', '/despesa-cartao/create', '\App\Controllers\DespesaCartaoController::create');

@@ -532,5 +532,20 @@ select option:checked {
         position: absolute;
     }
 
+
+    /* FORMULÁRIO CADASTRO DE DESPESAS DE CARTÃO DE CRÉDITO */
+    #well_desp_cartao {
+        height: 230px;
+    }
+    #div-principal-form-desp-cartao {
+        margin-top: 5%;
+        margin-left: 23.5%;
+    }
+    #span-success-desp-cartao-credito {
+        padding: 7.5px;
+        width: 240px;
+        position: absolute;
+    }
+
 }
 

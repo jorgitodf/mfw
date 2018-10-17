@@ -98,4 +98,8 @@ $container['credit_cards_model'] = function($c) {
     return new \App\Models\CreditCards($c);
 };
 
+$container['expenses_card'] = function($c) {
+    return new \App\Models\ExpensesCard($c);
+};
+
 return $container;
