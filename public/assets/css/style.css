@@ -7,6 +7,17 @@ html, body {
     background-color: #DFE2E6;
 }
 
+.uppercase {
+    text-transform: uppercase;
+}
+.lowercase {
+    text-transform: lowercase;
+}
+.capitalize {
+    text-transform: capitalize;
+}
+  
+
 /* MENU LATERAL */
 .nav-side-menu {
     margin-top: 3.7%;
@@ -457,6 +468,20 @@ select option:checked {
         margin-top: 4.5%;
         margin-left: 14.8%;
         width: 83%;
+    }
+
+    /* FORMULÁRIO CADASTRO DE DESPESAS DE CARTÃO DE CRÉDITO */
+    #well_desp_cartao {
+        height: 230px;
+    }
+    #div-principal-form-desp-cartao {
+        margin-top: 5%;
+        margin-left: 23%;
+    }
+    #span-success-desp-cartao-credito {
+        padding: 7.5px;
+        width: 240px;
+        position: absolute;
     }
 }
 

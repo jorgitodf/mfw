@@ -78,26 +78,50 @@ $(document).ready(function () {
     });
 
     $(function(){
-        $(".remove-color-input-money").click(function(){
-            $(this).val("").css("background", "white");
-            $(this).val("R$ ");
-            $(this).attr("type", "text").css("color", "black");
+        $(".remove-color-input-money").click(function() {
+            let str = $(this).val();
+            if (str.indexOf("Preencha") > -1 || str.indexOf("Informe") > -1 || str.indexOf("Valor") > -1) {
+                $(this).val("").css("background", "white").attr("type", "text").css("color", "black");
+                //$(this).val("R$ ");
+            }
         });
         $(".remove-color-input-money").focus(function () {
-            $(this).val("").css("background", "white");
-            $(this).val("R$ ");
-            $(this).attr("type", "text").css("color", "black");
+            if (str.indexOf("Preencha") > -1 || str.indexOf("Informe") > -1 || str.indexOf("Valor") > -1) {
+                $(this).val("").css("background", "white").attr("type", "text").css("color", "black");
+                //$(this).val("R$ ");
+            }
         });
     });
 
-    $(function(){
-        $(".remove-color-input").click(function(){
-            $(this).val("").css("background", "white");
-            $(this).attr("type", "text").css("color", "black");
+    $(function() {
+        $(".remove-color-input").click(function() {
+            let str = $(this).val();
+            if (str.indexOf("Preencha") > -1 || str.indexOf("Números") > -1 || str.indexOf("caracters") > -1) {
+                $(this).val("").css("background", "white");
+                $(this).attr("type", "text").css("color", "black");            
+            }
         });
         $(".remove-color-input").focus(function () {
-            $(this).val("").css("background", "white");
-            $(this).attr("type", "text").css("color", "black");
+            if (str.indexOf("Preencha") > -1 || str.indexOf("Números") > -1 || str.indexOf("caracters") > -1) {
+                $(this).val("").css("background", "white");
+                $(this).attr("type", "text").css("color", "black");            
+            }
+        });
+    });
+
+    $(function() {
+        $(".remove-color-input-date").click(function() {
+            let str = $(this).val();
+            if (str.indexOf("Preencha") > -1 || str.indexOf("Informe") > -1 || str.indexOf("Data") > -1) {
+                $(this).val("").css("background", "white");
+                $(this).attr("type", "date").css("color", "black");
+            }    
+        });
+        $(".remove-color-input-date").focus(function () {
+            if (str.indexOf("Preencha") > -1 || str.indexOf("Informe") > -1 || str.indexOf("Data") > -1) {
+                $(this).val("").css("background", "white");
+                $(this).attr("type", "date").css("color", "black");
+            }   
         });
     });
 
@@ -126,17 +150,6 @@ $(document).ready(function () {
             $(this).css("background", "white");
             $(this).find('option').css('color', 'black');
             $(this).css('color', 'black');
-        });
-    });
-
-    $(function(){
-        $(".remove-color-input-date").click(function(){
-            $(this).val("").css("background", "white");
-            $(this).attr("type", "date").css("color", "black");
-        });
-        $(".remove-color-input-date").focus(function () {
-            $(this).val("").css("background", "white");
-            $(this).attr("type", "date").css("color", "black");
         });
     });
 
