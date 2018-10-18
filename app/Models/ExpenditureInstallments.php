@@ -4,9 +4,9 @@ namespace App\Models;
 
 use App\Mfw\Model;
 
-class ExpensesCard extends Model
+class ExpenditureInstallments extends Model
 {
-    protected $table = 'expenses_card';
+    protected $table = 'expenditure_installments';
     
     public function getTable() 
     {

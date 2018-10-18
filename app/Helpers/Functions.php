@@ -94,5 +94,15 @@ class Functions
 
         return $mes;
     }
+
+    public static function insert_numbers($value)
+    {
+        $insert_numbers = new \Twig_SimpleFunction('insert_numbers', function($value) {
+            return wordwrap($value, 4, '.', true);
+        });
+
+        return $insert_numbers;
+    }
+
     
 }

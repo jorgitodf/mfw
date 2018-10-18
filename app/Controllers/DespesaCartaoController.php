@@ -17,13 +17,19 @@ class DespesaCartaoController
     protected function getModel($model): string
     {
         if ($model == 'dp') {
-            return 'expenses_card';
+            return 'expenses_card_model';
+        } else if ($model == 'cc') {
+            return 'credit_cards_model';
+        } else if ($model == 'pd') {
+            return 'expenditure_installments_model';
         }
     }
 
     public function index($c, $request)
     {
-        return $c['view']->render('cartao/despesa.html.twig', ['title' => 'Despesa de Cartão']);
+        $fields = ['t1.id', 'numero_cartao', 'bandeira', 'nome_banco'];
+        $cartoes = $c[$this->getModel('cc')]->ThreeJoin($fields, 'banks', 'flag_cards', 'fk_banks', 'fk_flag_cards', 't1', 'fk_users', 31);
+        return $c['view']->render('cartao/despesa.html.twig', ['title' => 'Despesa de Cartão', 'cartoes' => $cartoes]);
     }
 
     public function create($c, $request)
@@ -32,8 +38,11 @@ class DespesaCartaoController
         $error = $this->validations->validateDespesaCartao($data);
         
         if (!$error) {
-            $datas = $this->validations->formateDataDespesaCartao($data);
-            $c[$this->getModel()]->create($datas);
+            $datasDesp = $this->validations->formateDataDespesaCartao($data);
+            $res = $c[$this->getModel('dp')]->create($datasDesp);
+            $datasParc = $this->validations->formateDataDespesaCartaoParcela($c, $data, $res["id"]);
+            $c[$this->getModel('pd')]->create($datasParc);
+            
             status_code(201);
             return json_encode(['success' => 'Despesa Cadastrada com Sucesso!', 'status' => 201]);
         }

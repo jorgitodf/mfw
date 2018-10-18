@@ -13,6 +13,14 @@ class QueryBuilder
         return $this;
     }
 
+    public function selectFields(string $table, array $fields)
+    {
+        $sql = "SELECT (%s) FROM `{$table}` t1";
+        $columns = array_values($fields);
+        $this->sql = sprintf(str_replace(")", "", str_replace("(", "", $sql)), implode(', ', $columns));
+        return $this;
+    }
+
     public function selectOrderBy(string $table, string $value)
     {
         $this->sql = "SELECT * FROM `{$table}` ORDER BY `{$value}` ASC";
@@ -115,7 +123,19 @@ class QueryBuilder
         } else {
             $this->sql .= " JOIN `{$table2}` t2 ON (t2.id = t1.{$value1}) WHERE {$tableWhere}.{$fieldWhere} = {$value2} AND {$fieldBetween} BETWEEN '{$date1Between}' AND '{$date2Between}' ";
         }
+        
+        return $this;
+    }
 
+    public function ThreeJoin(string $table2, string $table3, $fT1J1, $fT2J2, $tableWhere, $fieldTblWhere, $value)
+    {
+        if (!$this->sql) {
+            throw new \Exception("Select(), Update() or Delete() is required before InnerJoin() method");
+        }
+
+        $this->sql .= " JOIN `{$table2}` t2 ON (t2.id = t1.{$fT1J1})";
+        $this->sql .= " JOIN `{$table3}` t3 ON (t3.id = t1.{$fT2J2})";
+        $this->sql .= " WHERE {$tableWhere}.{$fieldTblWhere} = {$value}";
         
         return $this;
     }

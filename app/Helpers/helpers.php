@@ -91,6 +91,23 @@ function formatarMoeda($valor)
     return number_format((float) $number, 2, "." ,"");
 }
 
+function data_pagamento($dia_pgto_fatura, $dataCompra)
+{
+    $data_atual = date('Y-m-d');
+    $data_fechamento_fatura = date('Y-m-27');
+    $ultimo_dia_mes_atual = date("t", mktime(0,0,0, date('m'),'01', date('Y'))); 
+
+    if ($dataCompra <= $data_fechamento_fatura) {
+        $data_pagamento = date('Y-m-'.$dia_pgto_fatura.'', strtotime("+1 month", strtotime($data_atual)));
+    } else if (($dataCompra > $data_fechamento_fatura) && ($dataCompra <= "2018-10-{$ultimo_dia_mes_atual}")) {
+        $data_pagamento = date('Y-m-'.$dia_pgto_fatura.'', strtotime("+2 month", strtotime($data_atual)));
+    } else {
+        $data_pagamento = date('Y-m-'.$dia_pgto_fatura.'', strtotime("+2 month", strtotime($data_atual)));
+    }
+    
+    return $data_pagamento;
+}
+
 function ano()
 {
     return date("Y");

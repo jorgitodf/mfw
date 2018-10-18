@@ -90,6 +90,14 @@ abstract class Model
         return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
 
+    public function ThreeJoin($fields, $table2, $table3, $fT1J1, $fT2J2, $tableWhere, $fieldTblWhere, $value)
+    {
+        $query = $this->queryBuilder->selectFields($this->table, $fields)->ThreeJoin($table2, $table3, $fT1J1, $fT2J2, $tableWhere, $fieldTblWhere, $value)->getData();
+        $stmt = $this->db->prepare($query->sql);
+        $stmt->execute($query->bind);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
     public function innerJoin($table2, $value1, $value2, $tableWhere, $fieldWhere, $fieldBetween = null, $date1Between = null, $date2Between = null)
     {
         $query = $this->queryBuilder->select($this->table)->innerJoin($table2, $value1, $value2, $tableWhere, $fieldWhere, $fieldBetween, $date1Between, $date2Between)->getData();
@@ -108,11 +116,19 @@ abstract class Model
 
     public function create(array $data) 
     {
-        $query = $this->queryBuilder->insert($this->table, $data)->getData();
-        $stmt = $this->db->prepare($query->sql);
-        $stmt->execute($query->bind);
-        $result = $this->getById(['id' => $this->db->lastInsertId()]);
-
+        if (array_sum(array_map('is_array', $data)) == 0) {
+            $query = $this->queryBuilder->insert($this->table, $data)->getData();
+            $stmt = $this->db->prepare($query->sql);
+            $stmt->execute($query->bind);
+            $result = $this->getById(['id' => $this->db->lastInsertId()]);
+        } else {
+            foreach ($data as $value) {
+                $query = $this->queryBuilder->insert($this->table, $value)->getData();
+                $stmt = $this->db->prepare($query->sql);
+                $stmt->execute($query->bind);
+                $result = $this->getById(['id' => $this->db->lastInsertId()]);
+            }
+        }
         return $result;
     }
 

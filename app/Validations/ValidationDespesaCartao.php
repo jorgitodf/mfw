@@ -3,6 +3,7 @@
 namespace App\Validations;
 
 use App\Mfw\Password;
+use App\Mfw\Verifications;
 
 class ValidationDespesaCartao
 {
@@ -11,6 +12,10 @@ class ValidationDespesaCartao
 
     public function validateDespesaCartao($data)
     {
+        if (empty($data['cartao'])) {
+            $this->erros['error_cartao'] = "Informe o Cartão!";
+        }
+
         if (empty($data['descricao'])) {
             $this->erros['error_descricao'] = "Preencha a Descrição!";
         } else if (!empty($data['descricao']) && is_numeric($data['descricao'])) {
@@ -42,20 +47,40 @@ class ValidationDespesaCartao
         return $this->erros;
     }
 
-    public function formateDataDespesaCartao($data, $idConta, $c)
+    public function formateDataDespesaCartao($data)
     {
-        $extrato = $c['extracts_model']->saldo($c['accounts_model']->getTable(), 1);
-        $d['data_movimentacao'] = trim($data['data_movimentacao_deb']);
-        $d['mes'] = verificaMes();
-        $d['tipo_operacao'] = 'Débito';
-        $d['movimentacao'] = trim($data['movimentacao']);
-        $d['quantidade'] = 1;
-        $d['valor'] = trim(formatarMoeda($data['valor']));
-        $d['saldo'] = ($extrato['saldo'] - formatarMoeda($data['valor']));
-        $d['fk_category'] = (int) trim($data['categoria']);
-        $d['fk_accounts'] = (int) $idConta;
-        $d['despesa_fixa'] = Verifications::checkCategory($c, $data['categoria']);
+        $d['descricao'] = trim($data['descricao']);
+        $d['data_compra'] = trim($data['data_compra']);
+        $d['fk_credit_cards'] = (int) trim($data['cartao']);
+        return $d;
+    }
 
+    public function formateDataDespesaCartaoParcela($c, $data, $idDespesa)
+    {
+        $diaPgtoFat = Verifications::checkDiaPagamentoFatura($c, $data['cartao']);
+
+        if ($data['numero_parcela'] == 1) {
+            $d['valor'] = trim(formatarMoeda($data['valor']));
+            $d['numero_parcela'] = "01/0{$data['numero_parcela']}";
+            $d['data_pagamento'] = data_pagamento($diaPgtoFat["dia_pgto_fatura"], $data['data_compra']);
+            $d['fk_expenses_card'] = $idDespesa;
+        } else {
+            $valor = number_format(formatarMoeda($data['valor']) / $data['numero_parcela'], 2, ".", "");
+            for ($i=1; $i <= $data['numero_parcela']; $i++) { 
+                $d[$i]['valor'] = (float) $valor;
+
+                if ($i < 10 && $data['numero_parcela'] < 10) {
+                    $d[$i]['numero_parcela'] = "0{$i}/0{$data['numero_parcela']}";
+                } else if ($i < 10 && $data['numero_parcela'] >= 10) {
+                    $d[$i]['numero_parcela'] = "0{$i}/{$data['numero_parcela']}";
+                } else {
+                    $d[$i]['numero_parcela'] = "{$i}/{$data['numero_parcela']}";
+                }
+                
+                $d[$i]['data_pagamento'] = date('Y-m-d', strtotime("+".$i." month", strtotime(data_pagamento($diaPgtoFat["dia_pgto_fatura"], $data['data_compra']))));
+                $d[$i]['fk_expenses_card'] = $idDespesa;
+            }
+        }
         return $d;
     }
 }    

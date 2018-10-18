@@ -13,6 +13,18 @@
                             <legend class="text-center">Despesa de Cartão de Crédito</legend>
                         
                             <div class="form-group col-md-12 col-sm-12">
+                                <label class="col-sm-2 col-md-2 control-label tam-fonte" for="cartao">Cartão:</label>
+                                <div class="col-sm-6 col-md-6">
+                                    <select class="form-control remove-color-option white" name="cartao" id="cartao" disabled="disabled"/>
+                                    <option></option>
+                                    {% for cartao in cartoes %}
+                                        <option value="{{ cartao.id }}">{{ insert_numbers(cartao.numero_cartao) }} - {{ cartao.bandeira }} - {{ cartao.nome_banco }}</option>
+                                    {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-12 col-sm-12">
                                 <label class="col-sm-2 col-md-2 control-label tam-fonte" for="descricao">Descrição:</label>
                                 <div class="col-sm-4 col-md-4">
                                     <input type="text" id="descricao" name="descricao" class="form-control remove-color-input white" placeholder="Informe a Despesa" disabled="disabled">

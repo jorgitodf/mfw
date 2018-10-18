@@ -19,4 +19,11 @@ class Verifications
         return $despesa;
     }
 
+    public static function checkDiaPagamentoFatura($c, $idCard)
+    {
+        $diaPagamentoFatura = $c['credit_cards_model']->getById(['id' => $idCard]);
+
+        return $diaPagamentoFatura;
+    }
+
 }

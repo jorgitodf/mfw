@@ -59,6 +59,7 @@ $container['view'] = function($c) {
     $twig->addFunction(Functions::csrf_token());
     $twig->addFunction(Functions::hasConta());
     $twig->addFunction(Functions::mes());
+    $twig->addFunction(Functions::insert_numbers($value));
     return $twig;
 };
 
@@ -98,8 +99,12 @@ $container['credit_cards_model'] = function($c) {
     return new \App\Models\CreditCards($c);
 };
 
-$container['expenses_card'] = function($c) {
+$container['expenses_card_model'] = function($c) {
     return new \App\Models\ExpensesCard($c);
+};
+
+$container['expenditure_installments_model'] = function($c) {
+    return new \App\Models\ExpenditureInstallments($c);
 };
 
 return $container;
