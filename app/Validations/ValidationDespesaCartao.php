@@ -66,6 +66,13 @@ class ValidationDespesaCartao
             $d['fk_expenses_card'] = $idDespesa;
         } else {
             $valor = number_format(formatarMoeda($data['valor']) / $data['numero_parcela'], 2, ".", "");
+            $data_pagamento = data_pagamento($diaPgtoFat["dia_pgto_fatura"], $data['data_compra']);
+            
+            $ex = explode("-", $data_pagamento);
+            $ano = $ex[0];
+            $mes = ($ex[1] - 1);
+            $dia = $ex[2];
+
             for ($i=1; $i <= $data['numero_parcela']; $i++) { 
                 $d[$i]['valor'] = (float) $valor;
 
@@ -77,8 +84,9 @@ class ValidationDespesaCartao
                     $d[$i]['numero_parcela'] = "{$i}/{$data['numero_parcela']}";
                 }
                 
-                $d[$i]['data_pagamento'] = date('Y-m-d', strtotime("+".$i." month", strtotime(data_pagamento($diaPgtoFat["dia_pgto_fatura"], $data['data_compra']))));
+                $d[$i]['data_pagamento'] = date("Y-m-d", mktime(0, 0, 0, $mes + $i, $dia, $ano));
                 $d[$i]['fk_expenses_card'] = $idDespesa;
+
             }
         }
         return $d;

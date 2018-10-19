@@ -44,3 +44,6 @@ $router->add('POST', '/cartao/create', '\App\Controllers\CartaoController::creat
 
 $router->add('GET', '/despesa-cartao', '\App\Controllers\DespesaCartaoController::index');
 $router->add('POST', '/despesa-cartao/create', '\App\Controllers\DespesaCartaoController::create');
+
+$router->add('GET', '/fatura', '\App\Controllers\FaturaController::index');
+$router->add('POST', '/fatura/generate', '\App\Controllers\FaturaController::generateInvoice');

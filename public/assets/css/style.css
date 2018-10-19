@@ -572,5 +572,21 @@ select option:checked {
         position: absolute;
     }
 
+
+    /* FORMULÁRIO GERAÇÃO DE FATURA DO CARTÃO DE CRÉDITO */
+    #well_fatura_cartao {
+        height: 230px;
+    }
+    #div-principal-form-fatura-cartao {
+        margin-top: 5%;
+        margin-left: 33%;
+    }
+    #span-success-desp-fatura-cartao-credito {
+        padding: 7.5px;
+        width: 240px;
+        margin-left: -63%;
+        position: absolute;
+    }
+
 }
 

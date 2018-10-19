@@ -35,12 +35,12 @@ SELECT
     parcela AS numero_parcela,
     data_pagamento AS data_pagamento,
     
-	'2018-10-18 18:45:45' AS created_at,
-    '2018-10-18 18:45:45' AS updated_at
+	NOW() AS created_at,
+    NOW() AS updated_at
 FROM
     financeiro.tb_despesa_cartao
 WHERE
-    fk_id_cartao_credito = 1 AND data_compra > '2016-01-01'
+    fk_id_cartao_credito = 2 AND data_compra > '2016-01-01'
 ORDER BY despesa, parcela ASC;
 
 SELECT 

@@ -1,0 +1,55 @@
+{% extends "templates/layout.html.twig" %}
+
+{% block title %}{{ title }}
+{% endblock %}
+
+{% block content %}
+    <div class="container col-md-8 col-sm-8" id="div-principal-form-fatura-cartao">
+        <div class="row">
+            <div class="col-md-10 col-sm-10">
+                <div class="well well-sm sombra" id="well_fatura_cartao">
+                    <form class="form-horizontal" role="form" action="{{ base_url() }}/fatura/generate" method="post" id="formFaturaCartaoCredito">
+                        <fieldset>
+                            <legend class="text-center">Gerar Fatura de Cartão de Crédito</legend>
+
+                            <div class="form-group col-md-12 col-sm-12">
+                                <label class="col-sm-3 col-md-3 control-label tam-fonte" for="cartao">Cartão:</label>
+                                <div class="col-sm-8 col-md-8">
+                                    <select class="form-control remove-color-option white" name="cartao" id="cartao" disabled="disabled"/>
+                                    <option></option>
+                                    {% for cartao in cartoes %}
+                                        <option value="{{ cartao.id }}">{{ insert_numbers(cartao.numero_cartao) }} - {{ cartao.bandeira }} - {{ cartao.nome_banco }}</option>
+                                    {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-12 col-sm-12">
+                                <label class="col-sm-3 col-md-3 control-label tam-fonte" for="data_pagamento">Data Pagamento:</label>
+                                <div class="col-sm-8 col-md-8">
+                                    <input type="date" id="data_pagamento" name="data_pagamento" class="form-control remove-color-input-date white" disabled="disabled">
+                                    <input type="hidden" name="_csrf_token" id="_csrf_token" value="{{ csrf_token() }}"/>
+                                    <input type="hidden" name="_has_conta" id="_has_conta" value="{{ hasConta() }}"/>
+                                </div>
+                            </div>
+
+                            <!-- Form actions -->
+                            <div class="form-group col-md-12 col-sm-12">
+                                <div class="col-md-4 col-sm-4 col-md-offset-3 col-sm-offset-3 text-left">
+                                    <button type="button" class="btn btn-primary btn-md" id="btn-nov-fatura-cartao">Novo</button>
+                                    <button type="submit" class="btn btn-primary btn-md" id="btn-fatura-cartao" disabled="disabled">Gerar</button>
+                                </div>
+                                <div class="col-md-3 col-sm-3 col-md-offset-1 col-sm-offset-1 text-left" id="div-msg-gerar-fatura-cartao-credito">
+                                    
+                                </div>
+                            </div>
+
+                        </fieldset>
+                    </form>
+                </div>    
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -212,6 +212,72 @@ $(document).ready(function () {
     });
 
 
+    // FORMULÁRIO GERAR FATURA DE CARTÃO DE CRÉDITO
+    $('#btn-nov-fatura-cartao').click(function () {
+        $("#btn-fatura-cartao").removeAttr('disabled');
+        $("#btn-nov-fatura-cartao").attr('disabled', 'disabled');
+        $("#cartao").removeAttr('disabled');
+        $("#cartao").focus();
+        $("#data_pagamento").removeAttr('disabled');
+        $("#cartao").css("background", "white");
+        $("#data_pagamento").css("background", "white");
+        $('#span-success-desp-fatura-cartao-credito').remove();
+        $("#cartao").val("");
+        $("#data_pagamento").val("");
+    });
+    $(function () {
+        $("#formFaturaCartaoCredito").submit(function(e) {
+            let url = $("#formFaturaCartaoCredito").attr("action");
+            let cartao = $("#cartao").val();
+            if (cartao != "") {
+                $('#span-success-desp-fatura-cartao-credito').remove();
+            }
+
+            let data_pagamento = $("#data_pagamento").val();
+            if (data_pagamento == 'Informe a Data do Pagamento!') {
+                data_pagamento = "";
+            }			
+
+            let _csrf_token = $("#_csrf_token").val();
+            
+            let data = {cartao: cartao, data_pagamento: data_pagamento, _csrf_token: _csrf_token};
+            e.preventDefault();
+
+            axios.post(url, simpleQueryString.stringify(data))
+                .then(function(response) {
+                    if (response.status == 201) {
+                        $("#btn-fatura-cartao").attr('disabled', 'disabled');
+                        $("#btn-nov-fatura-cartao").removeAttr('disabled');
+                        $("#cartao").attr('disabled', 'disabled');
+                        $("#data_pagamento").attr('disabled', 'disabled');
+                        $(".white").css("background", "#ffffb1");
+                        $("#div-msg-gerar-fatura-cartao-credito").html("<span class='alert alert-success msgSuccess' id='span-success-desp-fatura-cartao-credito'>"+ response.data['success'] +"</span>").css("display", "block");
+                    }
+                })
+                .catch(function(error) {
+                    if (error.response.status == 500) {
+                        if (!error.response.data.error['error_cartao'] == "") {
+                            $("#div-msg-gerar-fatura-cartao-credito").html("<span class='alert alert-danger msgError' id='span-success-desp-fatura-cartao-credito'>"+ error.response.data.error['error_cartao'] +"</span>").css("display", "block");
+                            $("#cartao").css("background", "#EBA8A3").css("color", "white");
+                        } else {
+                            $("#cartao").css("background", "#ffffb1").css("color", "black");
+                        }
+
+                        if (!error.response.data.error['error_data_pagamento'] == "") {
+                            $("#data_pagamento").attr("type", "text");
+                            $("#data_pagamento").val(error.response.data.error['error_data_pagamento']).css("background", "#EBA8A3").css("color", "white");
+                        } else {
+                            $("#data_pagamento").css("background", "#ffffb1");
+                        }
+
+                        if (!error.response.data.error['error_token_conta'] == "") {
+                            $("#div-msg-gerar-fatura-cartao-credito").html("<span class='alert alert-danger msgError' id='span-success-desp-fatura-cartao-credito'>"+ error.response.data.error['error_token_conta'] +"</span>").css("display", "block");
+                        }
+                    }
+                })
+        });    
+    });
+
     // FORMULÁRIO DE DESPESA DE CARTÃO DE CRÉDITO
     $('#btn-nov-desp-cartao').click(function () {
         $("#btn-desp-cartao").removeAttr('disabled');

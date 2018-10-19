@@ -107,4 +107,8 @@ $container['expenditure_installments_model'] = function($c) {
     return new \App\Models\ExpenditureInstallments($c);
 };
 
+$container['invoice_card_model'] = function($c) {
+    return new \App\Models\InvoiceCard($c);
+};
+
 return $container;
