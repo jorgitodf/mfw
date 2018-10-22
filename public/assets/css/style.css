@@ -588,5 +588,20 @@ select option:checked {
         position: absolute;
     }
 
+    /* FORMULÁRIO PAGAR FATURA DO CARTÃO DE CRÉDITO */
+    #well_fatura_pagar_cartao {
+        height: 200px;
+    }
+    #div-principal-form-pagar-fatura-cartao {
+        margin-top: 5%;
+        margin-left: 33%;
+    }
+    #span-success-pagar-fatura-cartao-credito {
+        padding: 7.5px;
+        width: 240px;
+        margin-left: -63%;
+        position: absolute;
+    }
+
 }
 

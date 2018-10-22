@@ -28,7 +28,7 @@ class DespesaCartaoController
     public function index($c, $request)
     {
         $fields = ['t1.id', 'numero_cartao', 'bandeira', 'nome_banco'];
-        $cartoes = $c[$this->getModel('cc')]->ThreeJoin($fields, 'banks', 'flag_cards', 'fk_banks', 'fk_flag_cards', 't1', 'fk_users', 31);
+        $cartoes = $c[$this->getModel('cc')]->ThreeJoin($fields, 'banks', 'flag_cards', 'fk_banks', 'fk_flag_cards', 't1', 'fk_users', $this->userSession["idLoggedIn"], 't1', 't1');
         return $c['view']->render('cartao/despesa.html.twig', ['title' => 'Despesa de Cartão', 'cartoes' => $cartoes]);
     }
 

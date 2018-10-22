@@ -212,6 +212,53 @@ $(document).ready(function () {
     });
 
 
+    // FORMULÁRIO PAGAR FATURA DE CARTÃO DE CRÉDITO
+    $('#btn-nov-pagar-fatura-cartao').click(function () {
+        $("#btn-pagar-fatura-cartao").removeAttr('disabled');
+        $("#btn-nov-pagar-fatura-cartao").attr('disabled', 'disabled');
+        $("#fatura").removeAttr('disabled');
+        $("#fatura").focus();
+        $("#fatura").css("background", "white");
+        $('#span-success-pagar-fatura-cartao-credito').remove();
+        $("#fatura").val("");
+    });
+    $(function () {
+        $("#formPagarFaturaCartaoCredito").submit(function(e) {
+            let url = $("#formPagarFaturaCartaoCredito").attr("action");
+            let fatura = $("#fatura").val();
+            if (fatura != "") {
+                $('#span-success-pagar-fatura-cartao-credito').remove();
+            }
+
+            let _csrf_token = $("#_csrf_token").val();
+            
+            let data = {fatura: fatura, _csrf_token: _csrf_token};
+            e.preventDefault();
+
+            axios.post(url, simpleQueryString.stringify(data))
+                .then(function(response) {
+                    if (response.status == 202) {
+                        window.location.replace(response.data['base_url']);
+                    }
+                })
+                .catch(function(error) {
+                    if (error.response.status == 500) {
+                        if (!error.response.data.error['error_fatura'] == "") {
+                            $("#div-msg-pagar-fatura-cartao-credito").html("<span class='alert alert-danger msgError' id='span-success-pagar-fatura-cartao-credito'>"+ error.response.data.error['error_fatura'] +"</span>").css("display", "block");
+                            $("#fatura").css("background", "#EBA8A3").css("color", "white");
+                        } else {
+                            $("#fatura").css("background", "#ffffb1").css("color", "black");
+                        }
+
+                        if (!error.response.data.error['error_token_conta'] == "") {
+                            $("#div-msg-pagar-fatura-cartao-credito").html("<span class='alert alert-danger msgError' id='span-success-pagar-fatura-cartao-credito'>"+ error.response.data.error['error_token_conta'] +"</span>").css("display", "block");
+                        }
+                    }
+                })
+        });    
+    });
+     
+
     // FORMULÁRIO GERAR FATURA DE CARTÃO DE CRÉDITO
     $('#btn-nov-fatura-cartao').click(function () {
         $("#btn-fatura-cartao").removeAttr('disabled');

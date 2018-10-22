@@ -127,16 +127,28 @@ class QueryBuilder
         return $this;
     }
 
-    public function ThreeJoin(string $table2, string $table3, $fT1J1, $fT2J2, $tableWhere, $fieldTblWhere, $value)
+    public function ThreeJoin(string $table2, string $table3, $fT1J1, $fT2J2, $tableWhere, $fieldTblWhere, $value, $tOn1, $tOn2)
     {
         if (!$this->sql) {
             throw new \Exception("Select(), Update() or Delete() is required before InnerJoin() method");
         }
 
-        $this->sql .= " JOIN `{$table2}` t2 ON (t2.id = t1.{$fT1J1})";
-        $this->sql .= " JOIN `{$table3}` t3 ON (t3.id = t1.{$fT2J2})";
-        $this->sql .= " WHERE {$tableWhere}.{$fieldTblWhere} = {$value}";
-        
+        $this->sql .= " JOIN `{$table2}` t2 ON (t2.id = {$tOn1}.{$fT1J1})";
+        $this->sql .= " JOIN `{$table3}` t3 ON (t3.id = {$tOn2}.{$fT2J2})";
+        $this->sql .= " WHERE {$tableWhere}.{$fieldTblWhere} = '{$value}'";
+        return $this;
+    }
+
+    public function ThreeJoin2Where(string $table2, string $table3, $t2OnField1, $t3OnField1, $fT1J1, $fT2J2, $tableWhere, $fieldTblWhere, $value, $tOn1, $tOn2, $tableWhere2, $fieldTblWhere2, $value2, $tOrder, $fieldOrder)
+    {
+        if (!$this->sql) {
+            throw new \Exception("Select(), Update() or Delete() is required before InnerJoin() method");
+        }
+
+        $this->sql .= " JOIN `{$table2}` t2 ON (t2.{$t2OnField1} = {$tOn1}.{$fT1J1})";
+        $this->sql .= " JOIN `{$table3}` t3 ON (t3.{$t3OnField1} = {$tOn2}.{$fT2J2})";
+        $this->sql .= " WHERE {$tableWhere}.{$fieldTblWhere} = '{$value}' AND {$tableWhere2}.{$fieldTblWhere2} = '{$value2}'";
+        $this->sql .= " ORDER BY {$tOrder}.{$fieldOrder} ASC";
         return $this;
     }
 

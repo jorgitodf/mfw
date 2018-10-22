@@ -90,9 +90,17 @@ abstract class Model
         return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
 
-    public function ThreeJoin($fields, $table2, $table3, $fT1J1, $fT2J2, $tableWhere, $fieldTblWhere, $value)
+    public function ThreeJoin($fields, $table2, $table3, $fT1J1, $fT2J2, $tableWhere, $fieldTblWhere, $value, $tOn1, $tOn2)
     {
-        $query = $this->queryBuilder->selectFields($this->table, $fields)->ThreeJoin($table2, $table3, $fT1J1, $fT2J2, $tableWhere, $fieldTblWhere, $value)->getData();
+        $query = $this->queryBuilder->selectFields($this->table, $fields)->ThreeJoin($table2, $table3, $fT1J1, $fT2J2, $tableWhere, $fieldTblWhere, $value, $tOn1, $tOn2)->getData();
+        $stmt = $this->db->prepare($query->sql);
+        $stmt->execute($query->bind);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    public function ThreeJoin2Where($fields, $table2, $table3, $t2OnField1, $t3OnField1, $fT1J1, $fT2J2, $tableWhere, $fieldTblWhere, $value, $tOn1, $tOn2, $tableWhere2, $fieldTblWhere2, $value2, $tOrder, $fieldOrder)
+    {
+        $query = $this->queryBuilder->selectFields($this->table, $fields)->ThreeJoin2Where($table2, $table3, $t2OnField1, $t3OnField1, $fT1J1, $fT2J2, $tableWhere, $fieldTblWhere, $value, $tOn1, $tOn2, $tableWhere2, $fieldTblWhere2, $value2, $tOrder, $fieldOrder)->getData();
         $stmt = $this->db->prepare($query->sql);
         $stmt->execute($query->bind);
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);

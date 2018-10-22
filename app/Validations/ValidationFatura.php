@@ -35,6 +35,19 @@ class ValidationFatura
         return $this->erros;
     }
 
+    public function validatePagarFatura($c, $data)
+    {
+        if (empty($data['fatura'])) {
+            $this->erros['error_fatura'] = "Selecione a Fatura a ser Paga!";
+        }
+
+        if ($data['_csrf_token'] !== Password::getTokenUser()) {
+            $this->erros['error_token_conta'] = "Operação não Autorizada!!";
+        }
+
+        return $this->erros;
+    }
+
     public function formateDataFatura($data)
     {
         $ex = explode("-", $data['data_pagamento']);
