@@ -152,6 +152,19 @@ class QueryBuilder
         return $this;
     }
 
+    public function getDataFaturaCreditCard($id, $idFatura)
+    {
+        if (!$this->sql) {
+            throw new \Exception("Select(), Update() or Delete() is required before InnerJoin() method");
+        }
+
+        $this->sql .= " JOIN `credit_cards` cc ON (cc.id = t1.fk_credit_cards)";
+        $this->sql .= " JOIN `flag_cards` fc ON (fc.id = cc.fk_flag_cards)";
+        $this->sql .= " JOIN banks b ON (b.id = cc.fk_banks)";
+        $this->sql .= " WHERE t1.fk_credit_cards = {$id} AND t1.id = {$idFatura}";
+        return $this;
+    }
+
     public function getData() :\stdClass
     {
         $query = new \stdClass;

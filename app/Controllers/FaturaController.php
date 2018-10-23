@@ -76,12 +76,22 @@ class FaturaController
     {
         if ($request->server->get('REQUEST_METHOD') == 'GET') {
             $idFatura = (int) $request->attributes->get(1);
-            $fatura = $c[$this->getModel('fat')]->findBy(['id' => $idFatura]);
-            $fields = ['t1.valor', 't1.numero_parcela', 't2.descricao', 't2.data_compra', 't3.id AS id_fatura'];
-            $itensFaturas = $c[$this->getModel('pd')]->ThreeJoin2Where($fields, 'expenses_card', 'invoice_card', 'id', 'data_pagamento_fatura', 
-            'fk_expenses_card', 'data_pagamento', 't2', 'fk_credit_cards', $fatura['fk_credit_cards'],
-            't1', 't1', 't3', 'id', $idFatura, 't2', 'data_compra');
-            dd($itensFaturas);
+            $fat = $c[$this->getModel('fat')]->findBy(['id' => $idFatura]);
+            
+            if ($fat) {
+                $aFields = ['numero_cartao, nome_banco, bandeira, data_pagamento_fatura, fk_credit_cards'];
+                $fatura = $c[$this->getModel('fat')]->getDataFaturaCreditCard($aFields, $fat["fk_credit_cards"], $idFatura);           
+    
+                $fields = ['t1.id, t1.valor', 't1.numero_parcela', 't2.descricao', 't2.data_compra', 't3.id AS id_fatura'];
+                $itensFaturas = $c[$this->getModel('pd')]->ThreeJoin2Where($fields, 'expenses_card', 'invoice_card', 'id', 'data_pagamento_fatura', 
+                'fk_expenses_card', 'data_pagamento', 't2', 'fk_credit_cards', $fatura['fk_credit_cards'],
+                't1', 't1', 't3', 'id', $idFatura, 't2', 'data_compra');
+
+                return $c['view']->render('fatura/fechar.html.twig', ['title' => 'Pagamento da Fatura', 'fatura' => $fatura, 'itensFatura' => $itensFaturas]);   
+            }
+
+            $erros = ['status' => 404, 'descricao' => 'Ops... Error 404 -> Página não encontrada...'];
+            return $c['view']->render('error/404.html.twig', ['title' => "Error {$erros['status']}", 'error' => $erros['descricao']]);   
         }    
     }
 }

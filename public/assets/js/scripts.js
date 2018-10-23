@@ -36,6 +36,17 @@ $(document).ready(function () {
     }
 
     $(function(){
+        $('table#table_lista_itens_fatura tbody tr').hover(
+            function(){
+                $(this).addClass('destaque');
+            },
+            function(){
+                $(this).removeClass('destaque');
+            }
+            );
+        });
+
+    $(function(){
         $(".remove-color-name").click(function(){
             $("#name").val("").css("background", "white");
             $("#name").css("color", "black");

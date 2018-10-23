@@ -603,5 +603,73 @@ select option:checked {
         position: absolute;
     }
 
+    /* FORMULÁRIO FECHAR FATURA DO CARTÃO DE CRÉDITO */
+    #well_fechar_fatura_cartao {
+        height: 535px;
+    }
+    #div-principal-form-fechar-fatura-cartao {
+        margin-top: 3%;
+        margin-left: 23.5%;
+    }
+    #span-success-pagar-fatura-cartao-credito {
+        padding: 7.5px;
+        width: 240px;
+        margin-left: -63%;
+        position: absolute;
+    }
+    .alinha_td_centro, .alinha_th_centro {
+        text-align: center;
+    }
+    .muda_label {
+        font-size: 12px;
+    }
+    #table_lista_itens_fatura > tbody > tr > td {
+        font-size: 12px;
+        padding: 2px;
+    }
+    #table_lista_itens_fatura > tfoot > tr > td{
+        font-size: 12px;
+        padding: 2px;
+    }
+    #table_lista_itens_fatura {
+        margin-left: auto;
+    }
+    .destaque{
+        background:#FFFF99 !important;
+        color:#FF0000 !important;
+    }
+    .tamanho_fonte {
+        font-size: 12px;
+        font-weight: bold;
+    }
+    .input_sm {
+        padding-right:0 !important;
+        padding-left:0 !important;
+    }
+    .input_sm {
+        height: 25px !important;
+        padding: 5px 10px !important;
+        font-size: 12px !important;
+        line-height: 1.5 !important;
+        border-radius: 3px !important;
+    }
+    .div_table_pagar_fatura {
+        height: 55px;
+    }
+
+
+    /* PÁGINA ERRO 404 */
+    #well_erro_404 {
+        height: 100px;
+    }
+    #div_principal_erro_404 {
+        margin-top: 5%;
+        margin-left: 23.5%;
+    }
+    .fontes {
+        font-family: DejaVu Sans Mono, monospace;
+        font-weight: bold;
+        font-size: 22px !important;
+    }
 }
 

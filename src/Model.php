@@ -114,6 +114,15 @@ abstract class Model
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
+    public function getDataFaturaCreditCard($fields, $idCredCard, $idFatura)
+    {   
+        $query = $this->queryBuilder->selectFields($this->table, $fields)->getDataFaturaCreditCard($idCredCard, $idFatura)->getData();
+        
+        $stmt = $this->db->prepare($query->sql);
+        $stmt->execute($query->bind);
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
+    }
+
     public function findBy(array $conditions)
     {
         $query = $this->queryBuilder->select($this->table)->where($conditions)->getData();

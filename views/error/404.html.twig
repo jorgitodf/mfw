@@ -1,0 +1,25 @@
+{% extends "templates/layout.html.twig" %}
+
+{% block title %}{{ title }}
+{% endblock %}
+
+{% block content %}
+    <div class="container col-md-9 col-sm-9" id="div_principal_erro_404">
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="well well-sm sombra" id="well_erro_404">
+                    <div class="row-fluid col-sm-12 col-md-12 col-lg-12 " id="">  
+                        <div class="form-group form-group-sm col-sm-10 col-md-10 col-lg-10" id="">
+                            <p class="fontes">{{error}}</p>
+                            <input type="hidden" name="set_vlr_pagar" value="pagar"/>
+                            <input type="hidden" name="_csrf_token" id="_csrf_token" value="{{ csrf_token() }}"/>
+                            <input type="hidden" name="_has_conta" id="_has_conta" value="{{ hasConta() }}"/>
+                        </div>
+                    </div>
+                </div>    
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
