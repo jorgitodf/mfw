@@ -131,6 +131,14 @@ abstract class Model
         return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
 
+    public function findById(array $fields, array $conditions)
+    {
+        $query = $this->queryBuilder->selectFields($this->table, $fields)->where($conditions)->getData();
+        $stmt = $this->db->prepare($query->sql);
+        $stmt->execute($query->bind);
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
+    }
+
     public function create(array $data) 
     {
         if (array_sum(array_map('is_array', $data)) == 0) {

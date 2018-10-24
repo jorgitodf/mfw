@@ -65,7 +65,7 @@ class FaturaController
         if (!$error) {
             $fatura = $c[$this->getModel('fat')]->findBy(['id' => $data['fatura']]);
             status_code(202);
-            return json_encode(['base_url' => base_url()."/fatura/descricao/{$fatura['fk_credit_cards']}", 'status' => 202]);
+            return json_encode(['base_url' => base_url()."/fatura/descricao/{$fatura['id']}", 'status' => 202]);
         }
 
         status_code(500);
@@ -79,9 +79,9 @@ class FaturaController
             $fat = $c[$this->getModel('fat')]->findBy(['id' => $idFatura]);
             
             if ($fat) {
-                $aFields = ['numero_cartao, nome_banco, bandeira, data_pagamento_fatura, fk_credit_cards'];
+                $aFields = ['t1.id, numero_cartao, nome_banco, bandeira, data_pagamento_fatura, fk_credit_cards'];
                 $fatura = $c[$this->getModel('fat')]->getDataFaturaCreditCard($aFields, $fat["fk_credit_cards"], $idFatura);           
-    
+
                 $fields = ['t1.id, t1.valor', 't1.numero_parcela', 't2.descricao', 't2.data_compra', 't3.id AS id_fatura'];
                 $itensFaturas = $c[$this->getModel('pd')]->ThreeJoin2Where($fields, 'expenses_card', 'invoice_card', 'id', 'data_pagamento_fatura', 
                 'fk_expenses_card', 'data_pagamento', 't2', 'fk_credit_cards', $fatura['fk_credit_cards'],
@@ -93,5 +93,20 @@ class FaturaController
             $erros = ['status' => 404, 'descricao' => 'Ops... Error 404 -> Página não encontrada...'];
             return $c['view']->render('error/404.html.twig', ['title' => "Error {$erros['status']}", 'error' => $erros['descricao']]);   
         }    
+    }
+
+    public function getRestanteFaturaAnterior($c, $request) 
+    {
+        $data = $request->request->all();
+        $mes = verificaMesNumerico();
+        $ano = date("Y");
+        $anoMes = "$ano-$mes";
+
+        $fields = ['valor_total_fatura, valor_pagamento_fatura'];
+        $r = $c[$this->getModel('fat')]->findById($fields, ['fk_credit_cards' => $data['id_cartao_cre'], 'ano_mes_ref' => "{$anoMes}"]); 
+        $value = ($r["valor_total_fatura"] - $r["valor_pagamento_fatura"]);
+
+        status_code(202);
+        return json_encode(['value' => $value, 'status' => 202]);
     }
 }

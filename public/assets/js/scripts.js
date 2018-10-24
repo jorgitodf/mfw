@@ -22,9 +22,22 @@ $(document).ready(function () {
 
     jQuery(document).ready(function ($) {
         $("#valor").maskMoney({showSymbol: true, symbol: "R$ ", decimal: ",", thousands: "."});
+        $("#encargos").maskMoney({showSymbol: true, symbol: "R$ ", decimal: ",", thousands: "."});
+        $("#iof").maskMoney({showSymbol: true, symbol: "R$ ", decimal: ",", thousands: "."});
+        $("#anuidade").maskMoney({showSymbol: true, symbol: "R$ ", decimal: ",", thousands: "."});
+        $("#juros_fat").maskMoney({showSymbol: true, symbol: "R$ ", decimal: ",", thousands: "."});
+        $("#protecao_prem").maskMoney({showSymbol: true, symbol: "R$ ", decimal: ",", thousands: "."});
+        $("#valor_pagar").maskMoney({showSymbol: true, symbol: "R$ ", decimal: ",", thousands: "."});
         $("#numero_cartao").mask("9999.9999.9999.9999");
         $("#data_validade").mask("99/9999");
     });
+
+    $(function(){
+        $("#encargos").focusout(function () {
+            $(this).maskMoney({showSymbol: true, symbol: "R$ ", decimal: ",", thousands: "."});
+        });
+    });
+
 
     switch ("{{ uri.getPath() }}") {
         case "/":
@@ -35,7 +48,7 @@ $(document).ready(function () {
             break;
     }
 
-    $(function(){
+    $(function() {
         $('table#table_lista_itens_fatura tbody tr').hover(
             function(){
                 $(this).addClass('destaque');
@@ -43,8 +56,8 @@ $(document).ready(function () {
             function(){
                 $(this).removeClass('destaque');
             }
-            );
-        });
+        );
+    });
 
     $(function(){
         $(".remove-color-name").click(function(){
@@ -222,6 +235,137 @@ $(document).ready(function () {
         });
     });
 
+
+    // FORMULÁRIO FECHAR PAGAMENTO FATURA DE CARTÃO DE CRÉDITO
+    $('#btn_limpar_pgto_fatura').click(function () {
+        $("#encargos").val("");
+        $("#iof").val("");
+        $("#anuidade").val("");
+        $("#protecao_prem").val("");
+        $("#juros_fat").val("");
+        $("#restante").val("");
+        $("#valor_total").val("");
+        $("#valor_pagar").val("");
+        $('#msg_error_pgto_fatura_cartao').remove();
+    });
+
+    $('#btn_novo_pgto_fatura').click(function () {
+        $("#btn_novo_pgto_fatura").attr('disabled', 'disabled');
+        $("#btn_calcular_fatura").removeAttr('disabled');
+        $("#btn_pagar_fatura").removeAttr('disabled');
+        $("#btn_limpar_pgto_fatura").removeAttr('disabled');
+    });
+
+    $('#btn_calcular_fatura').click(function () {
+        let url = $('#action').val();
+        let id_cartao_cre = $('#id_cartao_cre').val();
+        let _csrf_token = $("#_csrf_token").val();
+        let data = {id_cartao_cre: id_cartao_cre, _csrf_token: _csrf_token};
+
+        let str = $('#subtotal').val();
+        let subtotal = replace(str);
+
+        let enc = $('#encargos').val();
+        let encargos = replace(enc);
+        if (encargos === "") {
+            encargos = 0;
+        }
+
+        let i = $('#iof').val();
+        let iof = replace(i);
+        if (iof === "") {
+            iof = 0;
+        }
+        let anu = $('#anuidade').val();
+        let anuidade = replace(anu);
+        if (anuidade === "") {
+            anuidade = 0;
+        }
+        let prot = $('#protecao_prem').val();
+        let protecao_prem = replace(prot);
+        if (protecao_prem === "") {
+            protecao_prem = 0;
+        }
+        let jur = $('#juros_fat').val();
+        let juros_fat = replace(jur);
+        if (juros_fat === "") {
+            juros_fat = 0;
+        }
+        let rest = $('#restante').val();
+        let restante = replace(rest);
+        if (restante === "") {
+            restante = 0;
+        }
+        let valor_pg = $('#valor_pagar').val();
+        let valor_pagar = replace(valor_pg);
+        if (valor_pagar === "") {
+            valor_pagar = 0;
+        }
+        let total = 0;
+        if (subtotal > 0) {
+            total = (parseFloat(subtotal) + parseFloat(encargos) + parseFloat(iof) + parseFloat(anuidade) + parseFloat(protecao_prem)
+                + parseFloat(juros_fat) + parseFloat(restante));
+            //let num = total.toString();   
+            //let tot = num.replace('.',',');
+        }
+
+        axios.post(url, simpleQueryString.stringify(data))
+        .then(function(response) {
+            if (response.status == 202) {
+                let val = response.data['value'].toString();
+                let res = val.replace('.',',');
+                if (res == 0) {
+                    res = '0,00';
+                }
+                $('#restante').val('R$ ' + res);
+            }
+        })
+        .catch(function(error) {
+            if (error.response.status == 500) {
+                if (!error.response.data.error['error_fatura'] == "") {
+                    $("#div-msg-pagar-fatura-cartao-credito").html("<span class='alert alert-danger msgError' id='span-success-pagar-fatura-cartao-credito'>"+ error.response.data.error['error_fatura'] +"</span>").css("display", "block");
+                    $("#fatura").css("background", "#EBA8A3").css("color", "white");
+                } else {
+                    $("#fatura").css("background", "#ffffb1").css("color", "black");
+                }
+
+                if (!error.response.data.error['error_token_conta'] == "") {
+                    $("#div-msg-pagar-fatura-cartao-credito").html("<span class='alert alert-danger msgError' id='span-success-pagar-fatura-cartao-credito'>"+ error.response.data.error['error_token_conta'] +"</span>").css("display", "block");
+                }
+            }
+        })
+        if (encargos != 0) {
+            $('#encargos').val(numberToReal(encargos));
+        }
+        if (iof != 0) {
+            $('#iof').val(numberToReal(iof));
+        }
+        if (anuidade != 0) {
+            $('#anuidade').val(numberToReal(anuidade));
+        }
+        if (protecao_prem != 0) {
+            $('#protecao_prem').val(numberToReal(protecao_prem));
+        }
+        if (juros_fat != 0) {
+            $('#juros_fat').val(numberToReal(juros_fat));
+        }
+        if (valor_pagar != 0) {
+            $('#valor_pagar').val(numberToReal(valor_pagar));
+        }
+
+        $('#valor_total').val(numberToReal(total));
+
+    });
+
+    function replace(str) {
+        let encargos = str.replace('R$', '');
+        encargos = encargos.replace(',', '.'); 
+        return encargos;
+    }
+    function arred(val,casas) { 
+        let aux = Math.pow(2,casas);
+        return Math.floor(val * aux) / aux;
+    }
 
     // FORMULÁRIO PAGAR FATURA DE CARTÃO DE CRÉDITO
     $('#btn-nov-pagar-fatura-cartao').click(function () {
@@ -1294,19 +1438,19 @@ function redirectPageHome(base_url) {
 
 function formateDate(inputFormat) {
     function pad(s) { return (s < 10) ? '0' + s : s; }
-    var d = new Date(inputFormat);
+    let d = new Date(inputFormat);
     return [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('/');
 }
 
 function numberToReal(valor) {
-    var numero = parseFloat(valor).toFixed(2).split('.');
+    let numero = parseFloat(valor).toFixed(2).split('.');
     numero[0] = "R$ " + numero[0].split(/(?=(?:...)*$)/).join('.');
     return numero.join(',');
 }
 
 function generateTableExtract(datas) {
 
-    var table = "<table class='table table-striped table-hover table-bordered table-condensed display' id='table_extrato_din'>";
+    let table = "<table class='table table-striped table-hover table-bordered table-condensed display' id='table_extrato_din'>";
     table +=  "<thead>";
     table +=   	"<tr>";
     table +=       "<th class='th'>Data</th>";

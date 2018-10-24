@@ -13,23 +13,26 @@
                         
                         <div class="row-fluid col-sm-12 col-md-12 col-lg-12" id="div_row_table_fecha_fatura">  
                             <div class="form-group form-group-sm col-sm-3 col-md-3 col-lg-3">
-                                <label class="control-label tam-fonte" for="num_cartao">Cartão:</label>
-                                <input type="text" name="num_cartao" id="num_cartao" class="form-control input-sm" readonly="true" value=""/>
+                                <label class="control-label tam-fonte" for="num_cartao">Número do Cartão:</label>
+                                <input type="text" name="num_cartao" id="num_cartao" class="form-control input-sm" readonly="true" value="{{ insert_numbers(fatura.numero_cartao) }}"/>
+                                <input type="hidden" name="id_cartao_cre" id="id_cartao_cre" value="{{ fatura.fk_credit_cards }}"/>
+                                <input type="hidden" name="id_cartao_fat" id="id_cartao_fat" value="{{ fatura.id }}"/>
+                                <input type="hidden" name="" id="action" value="/fatura/get-restante-fatura-anterior"/>
                             </div>
 
                             <div class="form-group form-group-sm col-sm-3 col-md-3 col-lg-3">
                                 <label for="nome_banco" class="control-label tam-fonte">Banco:</label>
-                                <input type="text" name="nome_banco" id="nome_banco" class="form-control input-sm" readonly="true" value=""/>
+                                <input type="text" name="nome_banco" id="nome_banco" class="form-control input-sm" readonly="true" value="{{ fatura.nome_banco }}"/>
                             </div>
 
                             <div class="form-group form-group-sm col-sm-3 col-md-3 col-lg-3" id="">
                                 <label for="nome_bandeira" class="control-label tam-fonte">Bandeira:</label>
-                                <input type="text" name="nome_bandeira" id="nome_bandeira" class="form-control input-sm" readonly="true" value=""/>
+                                <input type="text" name="nome_bandeira" id="nome_bandeira" class="form-control input-sm" readonly="true" value="{{ fatura.bandeira }}"/>
                             </div>
 
                             <div class="form-group form-group-sm col-sm-3 col-md-3 col-lg-3" id="">
                                 <label for="dt_vencimento" class="control-label tam-fonte">Data de Vencimento:</label>
-                                <input type="text" name="dt_vencimento" id="dt_vencimento" class="form-control input-sm" readonly="true" value=""/>
+                                <input type="text" name="dt_vencimento" id="dt_vencimento" class="form-control input-sm" readonly="true" value="{{ fatura.data_pagamento_fatura|date("d/m/Y") }}"/>
                             </div>
                         </div>
 
