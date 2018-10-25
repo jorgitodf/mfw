@@ -51,3 +51,4 @@ $router->add('GET', '/fatura/pagar', '\App\Controllers\FaturaController::payInvo
 $router->add('POST', '/fatura/pagar', '\App\Controllers\FaturaController::payInvoice');
 $router->add('GET', '/fatura/descricao/(\d+)', '\App\Controllers\FaturaController::descriptionInvoice');
 $router->add('POST', '/fatura/get-restante-fatura-anterior', '\App\Controllers\FaturaController::getRestanteFaturaAnterior');
+$router->add('POST', '/fatura/quitar', '\App\Controllers\FaturaController::removeInvoice');

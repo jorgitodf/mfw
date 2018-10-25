@@ -21,23 +21,16 @@ $(document).ready(function () {
     })();
 
     jQuery(document).ready(function ($) {
-        $("#valor").maskMoney({showSymbol: true, symbol: "R$ ", decimal: ",", thousands: "."});
-        $("#encargos").maskMoney({showSymbol: true, symbol: "R$ ", decimal: ",", thousands: "."});
-        $("#iof").maskMoney({showSymbol: true, symbol: "R$ ", decimal: ",", thousands: "."});
-        $("#anuidade").maskMoney({showSymbol: true, symbol: "R$ ", decimal: ",", thousands: "."});
-        $("#juros_fat").maskMoney({showSymbol: true, symbol: "R$ ", decimal: ",", thousands: "."});
-        $("#protecao_prem").maskMoney({showSymbol: true, symbol: "R$ ", decimal: ",", thousands: "."});
-        $("#valor_pagar").maskMoney({showSymbol: true, symbol: "R$ ", decimal: ",", thousands: "."});
+        $("#valor").maskMoney({showSymbol: true, symbol:'R$ ', thousands:'.', decimal:',', symbolStay: true});
+        $("#encargos").maskMoney({showSymbol: true, symbol:'R$ ', thousands:'.', decimal:',', symbolStay: true});
+        $("#iof").maskMoney({showSymbol: true, symbol:'R$ ', thousands:'.', decimal:',', symbolStay: true});
+        $("#anuidade").maskMoney({showSymbol: true, symbol:'R$ ', thousands:'.', decimal:',', symbolStay: true});
+        $("#juros_fat").maskMoney({showSymbol: true, symbol:'R$ ', thousands:'.', decimal:',', symbolStay: true});
+        $("#protecao_prem").maskMoney({showSymbol: true, symbol:'R$ ', thousands:'.', decimal:',', symbolStay: true});
+        $("#valor_pagar").maskMoney({showSymbol: true, symbol:'R$ ', thousands:'.', decimal:',', symbolStay: true});
         $("#numero_cartao").mask("9999.9999.9999.9999");
         $("#data_validade").mask("99/9999");
     });
-
-    $(function(){
-        $("#encargos").focusout(function () {
-            $(this).maskMoney({showSymbol: true, symbol: "R$ ", decimal: ",", thousands: "."});
-        });
-    });
-
 
     switch ("{{ uri.getPath() }}") {
         case "/":
@@ -236,6 +229,59 @@ $(document).ready(function () {
     });
 
 
+    // FORMULÁRIO QUITAR FATURA DE CARTÃO DE CRÉDITO
+    $('#btn_pagar_fatura').click(function () {
+        let vp = $("#valor_pagar").val();
+        let vpg = replace(vp);
+        if (vpg != "") {
+            $('#span-success-quitar-fatura-cartao-credito').remove();
+        }
+        if (vpg != 0) {
+            $('#valor_pagar').val(numberToReal(vpg));
+        }
+    });
+    $(function () {
+        $("#formPagarFatura").submit(function(e) {
+            let url = $("#formPagarFatura").attr("action");
+            let id_cartao_fat = $("#id_cartao_fat").val();
+            let id_cartao_cre = $("#id_cartao_cre").val();
+            let encargos = $("#encargos").val();
+            let iof = $("#iof").val();
+            let anuidade = $("#anuidade").val();
+            let protecao_prem = $("#protecao_prem").val();
+            let juros_fat = $("#juros_fat").val();
+            let restante = $("#restante").val();
+            let valor_total = $("#valor_total").val();
+            let valor_pagar = $("#valor_pagar").val();
+            
+
+            let _csrf_token = $("#_csrf_token").val();
+            let data = {id_cartao_fat: id_cartao_fat, id_cartao_cre: id_cartao_cre, encargos: encargos,
+                iof: iof, anuidade: anuidade, protecao_prem: protecao_prem, juros_fat: juros_fat, restante: restante,
+                valor_total: valor_total, valor_pagar: valor_pagar ,_csrf_token: _csrf_token};
+            e.preventDefault();
+
+            axios.post(url, simpleQueryString.stringify(data))
+                .then(function(response) {
+                    if (response.status == 201) {
+
+                    }
+                })
+                .catch(function(error) {
+                    if (error.response.status == 500) {
+                        if (!error.response.data.error['error_valor_pagar'] == "") {
+                            $("#div-msg-quitar-fatura-cartao-credito").html("<span class='alert alert-danger msgError' id='span-success-quitar-fatura-cartao-credito'>"+ error.response.data.error['error_valor_pagar'] +"</span>").css("display", "block");
+                        }
+
+                        if (!error.response.data.error['error_token_conta'] == "") {
+                            $("#div-msg-quitar-fatura-cartao-credito").html("<span class='alert alert-danger msgError' id='span-success-quitar-fatura-cartao-credito'>"+ error.response.data.error['error_token_conta'] +"</span>").css("display", "block");
+                        }
+                    }
+                })
+        });    
+    });
+
+
     // FORMULÁRIO FECHAR PAGAMENTO FATURA DE CARTÃO DE CRÉDITO
     $('#btn_limpar_pgto_fatura').click(function () {
         $("#encargos").val("");
@@ -246,7 +292,7 @@ $(document).ready(function () {
         $("#restante").val("");
         $("#valor_total").val("");
         $("#valor_pagar").val("");
-        $('#msg_error_pgto_fatura_cartao').remove();
+        $('#span-success-quitar-fatura-cartao-credito').remove();
     });
 
     $('#btn_novo_pgto_fatura').click(function () {

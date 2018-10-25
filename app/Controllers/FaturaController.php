@@ -109,4 +109,21 @@ class FaturaController
         status_code(202);
         return json_encode(['value' => $value, 'status' => 202]);
     }
+
+    public function removeInvoice($c, $request)
+    {
+        $data = $request->request->all();
+        $error = $this->validations->validateQuitacaoFatura($data);
+
+        if (!$error) {
+            //$datas = $this->validations->formateDataQuitacaoFatura($data);
+            //$c[$this->getModel('fat')]->create($datas);
+            
+            status_code(201);
+            return json_encode(['success' => 'Fatura Gerada com Sucesso!', 'status' => 201]);
+        }
+
+        status_code(500);
+        return json_encode(['error' => $error, 'status' => 500]);
+    }
 }

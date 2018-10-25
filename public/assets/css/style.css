@@ -611,11 +611,14 @@ select option:checked {
         margin-top: 3%;
         margin-left: 23.5%;
     }
-    #span-success-pagar-fatura-cartao-credito {
+    #span-success-quitar-fatura-cartao-credito {
         padding: 7.5px;
-        width: 240px;
-        margin-left: -63%;
+        width: 300px;
+        margin-left: 10%;
         position: absolute;
+    }
+    #div-msg-quitar-fatura-cartao-credito {
+        display: none;
     }
     .alinha_td_centro, .alinha_th_centro {
         text-align: center;

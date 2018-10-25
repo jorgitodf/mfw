@@ -35,6 +35,19 @@ class ValidationFatura
         return $this->erros;
     }
 
+    public function validateQuitacaoFatura($data)
+    {
+        if (empty($data['valor_pagar'])) {
+            $this->erros['error_valor_pagar'] = "Preencha o Valor do Pagamento!";
+        } else if (!empty($data['valor_pagar']) && (formatarMoeda($data['valor_pagar']) > formatarMoeda($data['valor_total']))) {
+            $this->erros['error_valor_pagar'] = "Valor do Pagamento acima do Valor Total!";
+        } else if (!empty($data['valor_pagar']) && (formatarMoeda($data['valor_pagar']) < (formatarMoeda($data['valor_total']) * 0.10))) {
+            $this->erros['error_valor_pagar'] = "Valor do Pagamento Insufuciente!";
+        }
+
+        return $this->erros;
+    }
+
     public function validatePagarFatura($c, $data)
     {
         if (empty($data['fatura'])) {
