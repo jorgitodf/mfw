@@ -7,6 +7,14 @@ function data_inicial()
     return "{$ano}-{$mes}-01";
 }
 
+function formataData($data) {
+    if (!empty($data)) {
+        $d = explode("/", $data);
+        $data_format = (trim($d[2]."-".$d[1]."-".$d[0]));
+        return $data_format;
+    }
+}
+
 function data_final()
 {
     $ano = date("Y");

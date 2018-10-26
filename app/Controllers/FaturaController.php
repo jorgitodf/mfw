@@ -24,6 +24,8 @@ class FaturaController
             return 'credit_cards_model';
         } else if ($model == 'pd') {
             return 'expenditure_installments_model';
+        } else if ($model == 'sp') {
+            return 'scheduled_payments_model';
         }
     }
 
@@ -113,14 +115,19 @@ class FaturaController
     public function removeInvoice($c, $request)
     {
         $data = $request->request->all();
+
         $error = $this->validations->validateQuitacaoFatura($data);
+        $idConta = Password::hasConta();
 
         if (!$error) {
-            //$datas = $this->validations->formateDataQuitacaoFatura($data);
-            //$c[$this->getModel('fat')]->create($datas);
+            $datasF = $this->validations->formateDataQuitacaoFatura($data);
+            $datasA = $this->validations->formateDataQuitacaoFaturaToAgendamento($data, $idConta);
+
+            $c[$this->getModel('fat')]->update(['id' => $data['id_cartao_fat']], $datasF);
+            $c[$this->getModel('sp')]->create($datasA);
             
             status_code(201);
-            return json_encode(['success' => 'Fatura Gerada com Sucesso!', 'status' => 201]);
+            return json_encode(['success' => 'Fatura Paga e Agendada com Sucesso!', 'status' => 201]);
         }
 
         status_code(500);

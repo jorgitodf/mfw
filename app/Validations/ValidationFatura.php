@@ -45,6 +45,10 @@ class ValidationFatura
             $this->erros['error_valor_pagar'] = "Valor do Pagamento Insufuciente!";
         }
 
+        if ($data['_csrf_token'] !== Password::getTokenUser()) {
+            $this->erros['error_token_conta'] = "Operação não Autorizada!!";
+        }
+
         return $this->erros;
     }
 
@@ -72,6 +76,46 @@ class ValidationFatura
         $d['pago'] = "N";
         $d['ano_mes_ref'] = date("Y-m", mktime(0, 0, 0, $mes, $dia, $ano));
         $d['fk_credit_cards'] = (int) $data['cartao'];
+        return $d;
+    }
+
+    public function formateDataQuitacaoFatura($data)
+    {
+        $d = [];
+
+        $d["encargos"] = formatarMoeda($data["encargos"]) ?? null;
+        $d["protecao_premiada"] = formatarMoeda($data["protecao_prem"]) ?? null;
+        $d["iof"] = formatarMoeda($data["iof"]) ?? null;
+        $d["pago"] = "S";
+        $d["juros"] = formatarMoeda($data["juros_fat"]) ?? null;
+        $d["valor_total_fatura"] = formatarMoeda($data["valor_total"]);
+        $d["valor_pagamento_fatura"] = formatarMoeda($data["valor_pagar"]);
+        $d["restante_fatura_mes_anterior"] = (formatarMoeda($data["valor_total"]) - formatarMoeda($data["valor_pagar"]));
+        $d["data_fechamento_fatura"] = date('Y-m-d H:i:s');
+        $d["fk_credit_cards"] = $data["id_cartao_cre"];
+
+        return $d;
+    }
+
+    public function formateDataQuitacaoFaturaToAgendamento($data, $idConta)
+    {
+        $d = [];
+
+        if ($data["id_cartao_cre"] == 1) {
+            $movimentacao = "Cartão Banco Votorantim";
+        } else if ($data["id_cartao_cre"] == 2) {
+            $movimentacao = "Cartão Banco CEF";
+        } else if ($data["id_cartao_cre"] == 3) {
+            $movimentacao = "Cartão Banco NuBank";
+        }    
+
+        $d['data_pagamento'] = formataData($data['dt_vencimento']);
+        $d['movimentacao'] = $movimentacao;
+        $d['valor'] = formatarMoeda($data["valor_pagar"]);
+        $d['pago'] = 'Não';
+        $d['fk_category'] = 6;
+        $d['fk_account'] = $idConta;
+
         return $d;
     }
 

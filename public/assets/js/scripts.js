@@ -245,6 +245,7 @@ $(document).ready(function () {
             let url = $("#formPagarFatura").attr("action");
             let id_cartao_fat = $("#id_cartao_fat").val();
             let id_cartao_cre = $("#id_cartao_cre").val();
+            let dt_vencimento = $("#dt_vencimento").val();
             let encargos = $("#encargos").val();
             let iof = $("#iof").val();
             let anuidade = $("#anuidade").val();
@@ -256,15 +257,25 @@ $(document).ready(function () {
             
 
             let _csrf_token = $("#_csrf_token").val();
-            let data = {id_cartao_fat: id_cartao_fat, id_cartao_cre: id_cartao_cre, encargos: encargos,
-                iof: iof, anuidade: anuidade, protecao_prem: protecao_prem, juros_fat: juros_fat, restante: restante,
+            let data = {id_cartao_fat: id_cartao_fat, id_cartao_cre: id_cartao_cre, dt_vencimento: dt_vencimento,
+                encargos: encargos, iof: iof, anuidade: anuidade, protecao_prem: protecao_prem, juros_fat: juros_fat, restante: restante,
                 valor_total: valor_total, valor_pagar: valor_pagar ,_csrf_token: _csrf_token};
             e.preventDefault();
 
             axios.post(url, simpleQueryString.stringify(data))
                 .then(function(response) {
                     if (response.status == 201) {
-
+                        $("#btn_novo_pgto_fatura").removeAttr('disabled');
+                        $("#btn_calcular_fatura").attr('disabled', 'disabled');
+                        $("#btn_pagar_fatura").attr('disabled', 'disabled');
+                        $("#btn_limpar_pgto_fatura").attr('disabled', 'disabled');
+                        $("#encargos").attr('disabled', 'disabled');
+                        $("#iof").attr('disabled', 'disabled');
+                        $("#anuidade").attr('disabled', 'disabled');
+                        $("#protecao_prem").attr('disabled', 'disabled');
+                        $("#juros_fat").attr('disabled', 'disabled');
+                        $("#valor_pagar").attr('disabled', 'disabled');
+                        $("#div-msg-quitar-fatura-cartao-credito").html("<span class='alert alert-success msgSuccess' id='span-success-quitar-fatura-cartao-credito'>"+ response.data['success'] +"</span>").css("display", "block");
                     }
                 })
                 .catch(function(error) {
@@ -300,6 +311,19 @@ $(document).ready(function () {
         $("#btn_calcular_fatura").removeAttr('disabled');
         $("#btn_pagar_fatura").removeAttr('disabled');
         $("#btn_limpar_pgto_fatura").removeAttr('disabled');
+        $("#encargos").removeAttr('disabled');
+        $("#encargos").val('');
+        $("#iof").removeAttr('disabled');
+        $("#iof").val('');
+        $("#anuidade").removeAttr('disabled');
+        $("#anuidade").val('');
+        $("#protecao_prem").removeAttr('disabled');
+        $("#protecao_prem").val('');
+        $("#juros_fat").removeAttr('disabled');
+        $("#juros_fat").val('');
+        $("#valor_pagar").removeAttr('disabled');
+        $("#valor_pagar").val('');
+        $('#span-success-quitar-fatura-cartao-credito').remove();
     });
 
     $('#btn_calcular_fatura').click(function () {
