@@ -3,6 +3,8 @@ https://datatables.net/reference/option/
 Identar
 Ctrl+Alt+L
 
+https://bootsnipp.com/
+
 Comentário
 Ctrl+Shift+/
 
