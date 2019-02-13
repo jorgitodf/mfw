@@ -104,5 +104,14 @@ class Functions
         return $insert_numbers;
     }
 
+    public static function ano()
+    {
+        $ano = new \Twig_SimpleFunction('ano', function() {
+            return date("Y");
+        });
+
+        return $ano;
+    }
+
     
 }

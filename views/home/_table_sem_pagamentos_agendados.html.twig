@@ -1,0 +1,8 @@
+<div class="alert alert-warning text-center" role="alert">
+    <h3>Ainda não há nenhum Pagamento Agendado para o {{ mes() }}/{{ ano() }}</h2>
+    <input type="hidden" name="_has_conta" id="_has_conta" value="{{ hasConta() }}" />
+    <input type="hidden" name="_csrf_token" id="_csrf_token" value="{{ csrf_token() }}" />
+    <a class="btn btn-warning" href="{{ base_url() }}/pagamento" role="button">Agendar</a>
+</div>
+
+

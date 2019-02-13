@@ -11,10 +11,13 @@
 
                 {% if contas is not empty and hasConta() is empty %}
                 {% include 'home/_table_contas.html.twig' %}
+                {% elseif contas is not empty and hasConta() is not empty and pgtos is empty %}
+                {% include 'home/_table_sem_pagamentos_agendados.html.twig' %}
+                
                 {% elseif contas is not empty and hasConta() is not empty and pgtos is not empty %}
                 {% include 'home/_table_pagamentos_agendados.html.twig' %}
                     <input type="hidden" name="_has_conta" id="_has_conta" value="{{ hasConta() }}" />
-                    <input type="hidden" name="_csrf_token" id="_csrf_token" value="{{ csrf_token() }}"
+                    <input type="hidden" name="_csrf_token" id="_csrf_token" value="{{ csrf_token() }}" />
                 {% endif %}
                 
             </div>

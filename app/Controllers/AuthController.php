@@ -27,7 +27,7 @@ class AuthController
     public function auth($c, $request)
     {
         $data = $request->request->all();
-        
+
         $user = $c[$this->getModel()]->findBy(['email' => $data['email']]);
 
         if (!$user) {

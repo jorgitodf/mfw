@@ -1,9 +1,6 @@
 <?php
 
 use Pimple\Container;
-use Twig_Loader_Filesystem;
-use Twig_Environment;
-use Twig_Extension_Debug;
 use App\Helpers\Functions;
 
 $container = new Container();
@@ -13,8 +10,8 @@ $container['settings'] = function() {
             'db' => [
                 'dsn' => 'mysql:host=localhost;',
                 'database' => 'framework',
-                'username' => 'root',
-                'password' => 'root',
+                'username' => 'admin',
+                'password' => '123456',
                 'options' => [
                     \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'
                 ]
@@ -60,6 +57,7 @@ $container['view'] = function($c) {
     $twig->addFunction(Functions::hasConta());
     $twig->addFunction(Functions::mes());
     $twig->addFunction(Functions::insert_numbers($value));
+    $twig->addFunction(Functions::ano());
     return $twig;
 };
 
