@@ -123,7 +123,7 @@ class QueryBuilder
         } else {
             $this->sql .= " JOIN `{$table2}` t2 ON (t2.id = t1.{$value1}) WHERE {$tableWhere}.{$fieldWhere} = {$value2} AND {$fieldBetween} BETWEEN '{$date1Between}' AND '{$date2Between}' ";
         }
-        
+
         return $this;
     }
 
