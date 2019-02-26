@@ -8,10 +8,12 @@ use App\Validations\ValidationDespesaCartao;
 class DespesaCartaoController
 {
     private $validations;
+    private $userSession;
 
     public function __construct()
     {
         $this->validations = new ValidationDespesaCartao();
+        $this->userSession = Password::getSessionUser();
     }
 
     protected function getModel($model): string
